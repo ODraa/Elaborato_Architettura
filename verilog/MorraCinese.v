@@ -1,19 +1,63 @@
 module MorraCinese (
-    input wire [1:0] PRIMO;
-    input wire [1:0] SECONDO;
-    input wire [0:0] INIZIA;
 
-    output reg [1:0] MANCHE;
-    output reg [1:0] PARTITA;
+    input wire clk,
+
+    input wire [1:0] PRIMO;
+    input wire [1:0] SECONDO,
+    input wire [0:0] INIZIA = 1'b0,
+
+    output wire [1:0] MANCHE,
+    output wire [1:0] PARTITA,
+
+    output reg winPrimo [4:0],
+    output reg winSecondo [4:0]
 );
 
-/*
-PRIMO & SECONDO: 
-00 ---> nessuna mossa
-01 ---> sasso
-10 ---> carta
-11 ---> forbici
+always @(posedge clock) begin
+    case ({PRIMO, SECONDO})
 
-*/
-    
+        4'b00 00:
+
+        4'b00 01:
+
+        4'b00 10:
+
+        4'b00 11:
+
+        /////////////////////////////////////////
+
+        4'b01 00:
+
+        4'b01 01: 
+
+        4'b01 10:
+
+        4'b01 11:
+
+        /////////////////////////////////////////
+
+        4'b10 00:
+
+        4'b10 01:
+
+        4'b10 10:
+
+        4'b10 11:
+
+        /////////////////////////////////////////
+
+        4'b11 00:
+
+        4'b11 01:
+
+        4'b11 10:
+
+        4'b11 11:
+
+        /////////////////////////////////////////
+
+        default: 
+    endcase
+end
+
 endmodule
