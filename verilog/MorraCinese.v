@@ -28,9 +28,9 @@ always @(posedge clock) begin
 
         4'b01 00:
 
-        4'b01 01: 
+        4'b01 01: MANCHE = 2'b11;
 
-        4'b01 10:
+        4'b01 10: MANCHE = 2'b10;
 
         4'b01 11:
 
@@ -40,7 +40,7 @@ always @(posedge clock) begin
 
         4'b10 01:
 
-        4'b10 10:
+        4'b10 10: MANCHE = 2'b11;
 
         4'b10 11:
 
@@ -52,7 +52,7 @@ always @(posedge clock) begin
 
         4'b11 10:
 
-        4'b11 11:
+        4'b11 11: MANCHE = 2'b11;
 
         /////////////////////////////////////////
 
