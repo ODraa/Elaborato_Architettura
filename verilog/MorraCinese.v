@@ -13,6 +13,8 @@ module MorraCinese (
     output reg winSecondo [4:0]
 );
 
+// giga multiplexer a 16 ingressi
+
 always @(posedge clock) begin
     case ({PRIMO, SECONDO})
 
