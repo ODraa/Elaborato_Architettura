@@ -10,12 +10,12 @@ module moduleName (
         // Uscite del Circuito
         output wire [1:0] MANCHE,
         output wire [1:0] PARTITA,
-
-        // Registri per la memorizzazione delle vittorie
-        output reg [4:0] nPartite = 5'b00000,
-        output reg [4:0] winPrimo = 5'b00000,
-        output reg [4:0] winSecondo = 5'b00000
     );      
+
+    // Registri per la memorizzazione delle vittorie
+    reg [4:0] nPartite = 5'b00000;
+    reg [4:0] winPrimo = 5'b00000;
+    reg [4:0] winSecondo = 5'b00000;
 
     // se il valore di INIZIA = 1 allora entra nelle casistiche assegnando il valore a nPartite
     // appena verifica una delle casistiche, imposta il valore di INIZIA = 0 cosi da non eseguire piu il blocco
@@ -28,6 +28,10 @@ module moduleName (
                 4'b11??: nPartite <= {PRIMO, SECONDO};
             endcase;
             INIZIA <= 1'b0;
+        end
+        else if (INIZIA == 0) begin
+            // Qui si inizializzeranno tuti i casi delle mosse dei giocatori
+            // si creeranno cvontatori per poi incrementare il valore dei registri che contano le vittorie
         end
     end
 
