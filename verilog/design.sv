@@ -83,13 +83,13 @@ module moduleName (
                     // RESET TOTALE IN CASO DI RAGGIUNGIMENTO DEL NUMERO MASSIMO DI PARTITE
                     if (partiteVintePrimo + partiteVinteSecondo == nPartite) begin
                         INIZIA <= 1'b1;
-                        winPrimo = 5'b00000; 
-                        winSecondo = 5'b00000; 
-                        mossaVincitore;
-                        contatoreManche = 5'b00000;
-                        nPartite = 5'b00000;
-                        partiteVintePrimo = 5'b00000;
-                        partiteVinteSecondo = 5'b00000;
+                        winPrimo <= 5'b00000; 
+                        winSecondo <= 5'b00000; 
+                        mossaVincitore <= 2'b00;
+                        contatoreManche <= 5'b00000;
+                        nPartite <= 5'b00000;
+                        partiteVintePrimo <= 5'b00000;
+                        partiteVinteSecondo <= 5'b00000;
                     end
                 end
             end
