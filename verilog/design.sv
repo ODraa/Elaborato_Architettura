@@ -2,7 +2,6 @@
 
 NOTE DA CONTROLLARE
 
-- cambia le aggiunte di 1 (00001) con ++
 - nel controllo dove viene resettato il circuito verifica se serve un initial
 - controlla bene il funzionamento degl input INIZIA e del loro cambio di valore
 
@@ -10,31 +9,32 @@ NOTE DA CONTROLLARE
 
 
 module moduleName (
+
+            // Segnale di clock
+            input wire clk,
     
-        // Segnale di clock
-        input wire clk,
-
-        // Ingressi del Circuito
-        input wire [1:0] PRIMO;
-        input wire [1:0] SECONDO,
-        input wire [0:0] INIZIA = 1'b1,  // Impostato a 1 di default
-
-        // Uscite del Circuito
-        output wire [1:0] MANCHE,
-        output wire [1:0] PARTITA,
-    );      
-
-    // Registri per la memorizzazione delle vittorie
+            // Ingressi del Circuito
+            input wire [1:0] PRIMO,
+            input wire [1:0] SECONDO,
+            input wire [0:0] INIZIA = 1'b1,  // Impostato a 1 di default
     
-    reg [4:0] winPrimo = 5'b00000; // vittorie delle manche
-    reg [4:0] winSecondo = 5'b00000; // vittorie delle manche
-    reg [1:0] mossaVincitore = 2'b00; // inizializzato a "nessuna mossa"
-    reg [4:0] contatoreManche = 5'b00000;
-    reg [4:0] nPartite = 5'b00000;
-    reg [4:0] partiteVintePrimo = 5'b00000;
-    reg [4:0] partiteVinteSecondo = 5'b00000;
+            // Uscite del Circuito
+            output wire [1:0] MANCHE,
+            output wire [1:0] PARTITA
+        );      
 
-    reg [0:0] vincitore; // valore a 1bit che oscilla tra 0 e 1 a seconda del vincitore tra PRIMO e SECONDA
+        // Registri per la memorizzazione delle vittorie
+
+        reg [4:0] winPrimo = 5'b00000; // vittorie delle manche
+        reg [4:0] winSecondo = 5'b00000; // vittorie delle manche
+        reg [1:0] mossaVincitore = 2'b00; // inizializzato a "nessuna mossa"
+        reg [4:0] contatoreManche = 5'b00000;
+        reg [4:0] nPartite = 5'b00000;
+        reg [4:0] partiteVintePrimo = 5'b00000;
+        reg [4:0] partiteVinteSecondo = 5'b00000;
+    
+
+        reg [0:0] vincitore; // valore a 1bit che oscilla tra 0 e 1 a seconda del vincitore tra PRIMO e SECONDA
 
     // se il valore di INIZIA = 1 allora entra nelle casistiche assegnando il valore a nPartite
     // appena verifica una delle casistiche, imposta il valore di INIZIA = 0 cosi da non eseguire piu il blocco
@@ -96,9 +96,15 @@ module moduleName (
 
             case ({PRIMO, SECONDO})
 
-                4'b00 00: // manche non valida
-
-                4'b00 01: // considerata vittoria a tavolino
+                4'b0000: begin // manche non valida
+                    if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
+                        MANCHE <= 1'b00;
+                    end
+                    else if (vincitore == 1'b0 && mossaVincitore == {PRIMO}) begin
+                        MANCHE <= 1'b00;
+                    end
+                end
+                4'b0001: begin // considerata vittoria a tavolino
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -112,23 +118,8 @@ module moduleName (
                         // mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
                     end
-
-                4'b00 10:
-
-                    if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
-                        MANCHE <= 1'b00;
-                    end
-                    else if (vincitore == 1'b0 && mossaVincitore == {PRIMO}) begin
-                        MANCHE <= 1'b00;
-                    end
-                    else begin
-                        contatoreManche ++;
-                        winSecondo ++;
-                        // mossaVincitore = {SECONDO};
-                        vincitore = 1'b1;
-                    end
-
-                4'b00 11:
+                end
+                4'b0010: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -142,10 +133,25 @@ module moduleName (
                         // mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
                     end
+                end
+                4'b0011: begin
 
+                    if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
+                        MANCHE <= 1'b00;
+                    end
+                    else if (vincitore == 1'b0 && mossaVincitore == {PRIMO}) begin
+                        MANCHE <= 1'b00;
+                    end
+                    else begin
+                        contatoreManche ++;
+                        winSecondo ++;
+                        // mossaVincitore = {SECONDO};
+                        vincitore = 1'b1;
+                    end
+                end
                 /////////////////////////////////////////
 
-                4'b01 00:
+                4'b0100: begin
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
                     end
@@ -158,8 +164,8 @@ module moduleName (
                         // mossaVincitore = {PRIMO}; visto che la mossa è non giocata non segno la mossa vincitrice senno si va in un loop di pareggi
                         vincitore = 1'b0;
                     end
-
-                4'b01 01: 
+                end
+                4'b0101: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -172,8 +178,8 @@ module moduleName (
                     end
                     
                     // controlla eventuali errori per quanto riguarda la mossa del vincitore
-
-                4'b01 10: 
+                end
+                4'b0110: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -187,8 +193,8 @@ module moduleName (
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
                     end
-
-                4'b01 11:
+                end
+                4'b0111: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -202,10 +208,10 @@ module moduleName (
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
                     end
-
+                end
                 /////////////////////////////////////////
 
-                4'b10 00:
+                4'b1000: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -219,8 +225,8 @@ module moduleName (
                         // mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
                     end  
-
-                4'b10 01:
+                end
+                4'b1001: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -234,8 +240,8 @@ module moduleName (
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
                     end
-
-                4'b10 10: 
+                end
+                4'b1010: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -247,8 +253,8 @@ module moduleName (
                         contatoreManche ++;
                         // controlla eventuali errori per quanto riguarda la mossa del vincitore
                     end
-
-                4'b10 11:
+                end
+                4'b1011: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -262,10 +268,10 @@ module moduleName (
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
                     end
-
+                end
                 /////////////////////////////////////////
 
-                4'b11 00:
+                4'b1100: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -279,8 +285,8 @@ module moduleName (
                         // mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
                     end
-
-                4'b11 01:
+                end
+                4'b1101: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -294,8 +300,8 @@ module moduleName (
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
                     end
-
-                4'b11 10:
+                end
+                4'b1110: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -309,8 +315,8 @@ module moduleName (
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
                     end
-
-                4'b11 11:
+                end
+                4'b1111: begin
 
                     if (vincitore == 1'b1 && mossaVincitore == {SECONDO}) begin
                         MANCHE <= 1'b00;
@@ -322,10 +328,10 @@ module moduleName (
                         contatoreManche ++;
                         // controlla eventuali errori per quanto riguarda la mossa del vincitore
                     end
-                    
+                end
                 /////////////////////////////////////////
 
-                default: ///////////////////////////
+                //default:
             endcase
         end
     end
