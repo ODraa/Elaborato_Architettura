@@ -32,9 +32,7 @@ module moduleName (
         reg [4:0] nPartite = 5'b00000;
         reg [4:0] partiteVintePrimo = 5'b00000;
         reg [4:0] partiteVinteSecondo = 5'b00000;
-    
-
-        reg [0:0] vincitore; // valore a 1bit che oscilla tra 0 e 1 a seconda del vincitore tra PRIMO e SECONDA
+        reg vincitore; // valore a 1bit che oscilla tra 0 e 1 a seconda del vincitore tra PRIMO e SECONDA
 
     // se il valore di INIZIA = 1 allora entra nelle casistiche assegnando il valore a nPartite
     // appena verifica una delle casistiche, imposta il valore di INIZIA = 0 cosi da non eseguire piu il blocco
@@ -47,7 +45,7 @@ module moduleName (
                 4'b10??: nPartite <= {PRIMO, SECONDO};
                 4'b11??: nPartite <= {PRIMO, SECONDO};
             endcase;
-            INIZIA <= 1'b0;
+            INIZIA = 1'b0;
         end
 
         else if (INIZIA == 1'b0) begin
@@ -56,20 +54,20 @@ module moduleName (
                     partiteVintePrimo++;
 
                     // RESET DELLE MANCHE IN CASO DI VITTORIA DELLA PARTITA DELLE VITTORIE DI PRIMO, SECONDO E CONTATORE MANCHE
-                    winPrimo <= 5'b00000; // vittorie delle manche
-                    winSecondo <= 5'b00000; // vittorie delle manche
-                    contatoreManche <= 5'b00000;
+                    winPrimo = 5'b00000; // vittorie delle manche
+                    winSecondo = 5'b00000; // vittorie delle manche
+                    contatoreManche = 5'b00000;
 
                     // RESET TOTALE IN CASO DI RAGGIUNGIMENTO DEL NUMERO MASSIMO DI PARTITE
                     if (partiteVintePrimo + partiteVinteSecondo == nPartite) begin
-                        INIZIA <= 1'b1;
-                        winPrimo <= 5'b00000; 
-                        winSecondo <= 5'b00000; 
-                        mossaVincitore <= 2'b00;
-                        contatoreManche <= 5'b00000;
-                        nPartite <= 5'b00000;
-                        partiteVintePrimo <= 5'b00000;
-                        partiteVinteSecondo <= 5'b00000;
+                        INIZIA = 1'b1;
+                        winPrimo = 5'b00000; 
+                        winSecondo = 5'b00000; 
+                        mossaVincitore = 2'b00;
+                        contatoreManche = 5'b00000;
+                        nPartite = 5'b00000;
+                        partiteVintePrimo = 5'b00000;
+                        partiteVinteSecondo = 5'b00000;
                     end
                 end
                 if (winSecondo - winPrimo == 5'b00010) begin
@@ -82,7 +80,7 @@ module moduleName (
 
                     // RESET TOTALE IN CASO DI RAGGIUNGIMENTO DEL NUMERO MASSIMO DI PARTITE
                     if (partiteVintePrimo + partiteVinteSecondo == nPartite) begin
-                        INIZIA <= 1'b1;
+                        INIZIA = 1'b1;
                         winPrimo <= 5'b00000; 
                         winSecondo <= 5'b00000; 
                         mossaVincitore <= 2'b00;
@@ -117,6 +115,7 @@ module moduleName (
                         winSecondo ++;
                         // mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 4'b0010: begin
@@ -132,6 +131,7 @@ module moduleName (
                         winSecondo ++;
                         // mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 4'b0011: begin
@@ -147,6 +147,7 @@ module moduleName (
                         winSecondo ++;
                         // mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 /////////////////////////////////////////
@@ -163,6 +164,7 @@ module moduleName (
                         winPrimo ++;
                         // mossaVincitore = {PRIMO}; visto che la mossa è non giocata non segno la mossa vincitrice senno si va in un loop di pareggi
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end
                 end
                 4'b0101: begin
@@ -192,6 +194,7 @@ module moduleName (
                         winSecondo ++;
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 4'b0111: begin
@@ -207,6 +210,7 @@ module moduleName (
                         winPrimo ++;
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end
                 end
                 /////////////////////////////////////////
@@ -224,6 +228,7 @@ module moduleName (
                         winPrimo ++;
                         // mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end  
                 end
                 4'b1001: begin
@@ -239,6 +244,7 @@ module moduleName (
                         winPrimo ++;
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end
                 end
                 4'b1010: begin
@@ -267,6 +273,7 @@ module moduleName (
                         winSecondo ++;
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 /////////////////////////////////////////
@@ -284,6 +291,7 @@ module moduleName (
                         winPrimo ++;
                         // mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end
                 end
                 4'b1101: begin
@@ -299,6 +307,7 @@ module moduleName (
                         winSecondo ++;
                         mossaVincitore = {SECONDO};
                         vincitore = 1'b1;
+                        MANCHE <= 2'b10;
                     end
                 end
                 4'b1110: begin
@@ -314,6 +323,7 @@ module moduleName (
                         winPrimo ++;
                         mossaVincitore = {PRIMO};
                         vincitore = 1'b0;
+                        MANCHE <= 2'b01;
                     end
                 end
                 4'b1111: begin
@@ -331,7 +341,7 @@ module moduleName (
                 end
                 /////////////////////////////////////////
 
-                //default:
+                default: MANCHE <= 2'b00;
             endcase
         end
     end
