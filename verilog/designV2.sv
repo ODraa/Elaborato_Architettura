@@ -1,6 +1,8 @@
 
 /*
 NOTA 1: SETTA COME POEDGE IL CLK
+NOTA 2: CONTROLLA LE CONDIZIONE DELL'ALWAYS
+NOTA 3: QUANDO INIZIA = 1 CONFIGURAZIONE DEL NUMERO DI PARTITE
 */
 
 module MorraCinese (
@@ -32,9 +34,12 @@ module MorraCinese (
         if (INIZIA == 1) begin
             MANCHE <= 2'b00;
             PARTITA <= 2'b00;
+
             contatore_manche <= 0;
+
             manche_vinte_primo <= 0;
             manche_vinte_secondo <= 0;
+
             partite_vinte_primo <= 0;
             partite_vinte_secondo <= 0;
             
