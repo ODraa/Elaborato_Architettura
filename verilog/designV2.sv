@@ -24,7 +24,7 @@ module MorraCinese (
     reg [4:0] partite_vinte_primo; // conta il numero di partite vinte dal giocatore 1
     reg [4:0] partite_vinte_secondo; // conta il numero di partite vinte dal giocatore 2
 
-    always @(posedge INIZIA) begin
+    always @(posedge clk) begin
         // Inizializzazione del sistema
         if (INIZIA == 1) begin
             MANCHE <= 2'b00;
@@ -41,7 +41,7 @@ module MorraCinese (
         end
     end
 
-    always @(posedge INZIA or posedge PRIMO or posedge SECONDO) begin
+    always @(posedge clk) begin
         if (INIZIA == 0) begin
             case ({PRIMO, SECONDO})
 
