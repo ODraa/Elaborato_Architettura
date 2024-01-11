@@ -1,5 +1,5 @@
 /*
-NOTA 1: SETTA COME POEDGE IL CLK
+NOTA 1: SETTA COME POSEDGE IL CLK
 NOTA 2: CONTROLLA LE CONDIZIONE DELL'ALWAYS
 NOTA 3: QUANDO INIZIA = 1 CONFIGURAZIONE DEL NUMERO DI PARTITE
 */
@@ -9,6 +9,7 @@ module MorraCinese (
     input wire [1:0] PRIMO,
     input wire [1:0] SECONDO,
     input wire INIZIA,
+
     output reg [1:0] MANCHE,
     output reg [1:0] PARTITA
 );
@@ -61,7 +62,7 @@ module MorraCinese (
             endcase;
         end
     end
-
+ 
     always @(posedge clk) begin
         if (INIZIA == 0) begin
             case ({PRIMO, SECONDO})
@@ -141,6 +142,9 @@ module MorraCinese (
                     PARTITA <= 2'b10; //vittoria del giocatore 2
                 end
             end
+
+            // da settare l'output di parita a 00 (in corso) nel caso
+            // la partita sia ancora da completare
         end
     end
 endmodule
