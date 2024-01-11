@@ -1,4 +1,3 @@
-
 /*
 NOTA 1: SETTA COME POEDGE IL CLK
 NOTA 2: CONTROLLA LE CONDIZIONE DELL'ALWAYS
@@ -24,20 +23,42 @@ module MorraCinese (
     reg [4:0] partite_vinte_primo; // conta il numero di partite vinte dal giocatore 1
     reg [4:0] partite_vinte_secondo; // conta il numero di partite vinte dal giocatore 2
 
+    reg [4:0] numero_partite;
+
+    initial begin
+        contatore_manche <= 0;
+        manche_vinte_primo <= 0;
+        manche_vinte_secondo <= 0;
+        partite_vinte_primo <= 0;
+        partite_vinte_secondo <= 0;
+        mossa_giocatore_1 <= 2'b00;
+        mossa_giocatore_2 <= 2'b00;
+        mossa_vincitrice <= 2'b00;
+        vincitore_manche_precedente <= 2'b00;
+        numero_partite <= 2'b00000;
+    end
+
     always @(posedge clk) begin
         // Inizializzazione del sistema
         if (INIZIA == 1) begin
-            MANCHE <= 2'b00;
-            PARTITA <= 2'b00;
+   
             contatore_manche <= 0;
+
             manche_vinte_primo <= 0;
             manche_vinte_secondo <= 0;
-            partite_vinte_primo <= 0;
-            partite_vinte_secondo <= 0;
+
             mossa_giocatore_1 <= 2'b00;
             mossa_giocatore_2 <= 2'b00;
             mossa_vincitrice <= 2'b00;
+
             vincitore_manche_precedente <= 2'b00;
+
+            case ({PRIMO, SECONDO}) //concatenazione di PRIMO e SECONDO
+                4'b00??: numero_partite <= {PRIMO, SECONDO};
+                4'b01??: numero_partite <= {PRIMO, SECONDO};
+                4'b10??: numero_partite <= {PRIMO, SECONDO};
+                4'b11??: numero_partite <= {PRIMO, SECONDO};
+            endcase;
         end
     end
 
@@ -107,9 +128,8 @@ module MorraCinese (
             if (MANCHE == 2'b11) begin
                 contatore_manche = contatore_manche + 1;
 
-                // causa pareggio tutte le mosse sono sbloccate
-                mossa_giocatore_1 <= 2'b00;
-                mossa_giocatore_2 <= 2'b00;
+                // reset della mossa vincitrice in caso di pareggio
+                mossa_vincitrice <= 2'b00;
             end
 
             if (contatore_manche >= 4 && contatore_manche <= 19) begin
