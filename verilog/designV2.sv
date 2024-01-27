@@ -16,6 +16,7 @@ module MorraCinese (
 
     reg [1:0] mossa_giocatore_1;
     reg [1:0] mossa_giocatore_2;
+    
     reg [1:0] mossa_vincitrice;
     reg [1:0] vincitore_manche_precedente;
     reg [4:0] contatore_manche; // conta il numero di manche giocate
@@ -53,7 +54,6 @@ module MorraCinese (
             mossa_vincitrice <= 2'b00;
 
             vincitore_manche_precedente <= 2'b00;
-
             case ({PRIMO, SECONDO}) //concatenazione di PRIMO e SECONDO
                 4'b00??: numero_partite <= {PRIMO, SECONDO};
                 4'b01??: numero_partite <= {PRIMO, SECONDO};
@@ -68,7 +68,7 @@ module MorraCinese (
             case ({PRIMO, SECONDO})
 
                 // nel caso 0000 la scelta è ricadura su MANCHE <= 2'b00 dato il "rifiuto" di giocare
-                4'b0000: MANCHE <= 2'b00; // pareggio
+                4'b0000: MANCHE <= 2'b00; // MANCHE ANNULLATA
                 
                 4'b0001: MANCHE <= ((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) ? 2'b00 : 2'b10; // secondo
 
@@ -103,35 +103,41 @@ module MorraCinese (
                 default: MANCHE <=  2'b00;
             endcase       
 
-            if (MANCHE == 2'b01) begin
+
+            if (MANCHE != 2'b00) begin
                 contatore_manche = contatore_manche + 1;
-                manche_vinte_primo = manche_vinte_primo + 1;
 
-                mossa_giocatore_1 <= PRIMO;
+                if (MANCHE == 2'b01) begin
+                    // contatore_manche = contatore_manche + 1;
+                    manche_vinte_primo = manche_vinte_primo + 1;
 
-                vincitore_manche_precedente <= MANCHE;
-                mossa_vincitrice <= mossa_giocatore_1;
-                
-            end
-            if (MANCHE == 2'b10) begin
-                contatore_manche = contatore_manche + 1;
-                manche_vinte_secondo = manche_vinte_secondo + 1;
+                    mossa_giocatore_1 <= PRIMO;
 
-                mossa_giocatore_2 <= SECONDO; // setto la mossa vincente di giocatore2
+                    vincitore_manche_precedente <= MANCHE;
+                    mossa_vincitrice <= mossa_giocatore_1;
+                end
 
-                vincitore_manche_precedente <= MANCHE;
-                mossa_vincitrice <= mossa_giocatore_2;
+                if (MANCHE == 2'b10) begin
+                    // contatore_manche = contatore_manche + 1;
+                    manche_vinte_secondo = manche_vinte_secondo + 1;
 
-                // dato che PRIMO ha perso sblocco la sua mossa vincente di prima
-                // mossa_giocatore_1 <= 2'b00;
+                    mossa_giocatore_2 <= SECONDO; // setto la mossa vincente di giocatore2
+
+                    vincitore_manche_precedente <= MANCHE;
+                    mossa_vincitrice <= mossa_giocatore_2;
+
+                    // dato che PRIMO ha perso sblocco la sua mossa vincente di prima
+                    // mossa_giocatore_1 <= 2'b00;
+                end
+
+                if (MANCHE == 2'b11) begin
+                    // contatore_manche = contatore_manche + 1;
+
+                    // reset della mossa vincitrice in caso di pareggio
+                    mossa_vincitrice <= 2'b00;
+                end
             end
             
-            if (MANCHE == 2'b11) begin
-                contatore_manche = contatore_manche + 1;
-
-                // reset della mossa vincitrice in caso di pareggio
-                mossa_vincitrice <= 2'b00;
-            end
 
             if (contatore_manche >= 4 && contatore_manche <= 19) begin
                 if (manche_vinte_primo - manche_vinte_secondo == 2) begin
