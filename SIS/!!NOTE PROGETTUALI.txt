@@ -1,4 +1,9 @@
-NOTE:
+
+NOTE DI PROGETTAZIONE:
+
+Quando il nome del file si trova con questo formato file_N.blif l'underscore non indica il numero di bit che elabora il componente
+ma il modello del singolo componente quindi MUX_1 non indica necessariamente che il MUX sia con out = 1bit.
+Al contrario se il formato è FILE2.blif non essendo presente l'underscore indica il numero di bit che elabora il componente.
 
 -------------------------------------------------------------------------------------------------------------
 
@@ -15,3 +20,14 @@ MUX 6 --> MUX 2:1  (S = 1b; I/O = 5b)
 -------------------------------------------------------------------------------------------------------------
 
 DEMUX 1 --> DEMUX 1:4 (S = 2b; I/O = 5b)
+
+-------------------------------------------------------------------------------------------------------------
+
+Nel progetto andiamo ad utilizzare un totale di 8 registri di cui:
+
+- 4 sono registri a 2bit
+- 4 sono registri a 5bit
+
+Nei file è presente un file REGISTRO.blif che fa da genitore alla creazione di registri a più bit
+
+-------------------------------------------------------------------------------------------------------------

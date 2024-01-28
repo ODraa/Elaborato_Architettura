@@ -1,0 +1,11 @@
+.model REGISTRO2
+
+.inputs A1 A0
+.outputs  OUT1 OUT0
+
+.subckt REGISTRO A=A1 OUT=OUT1
+.subckt REGISTRO A=A0 OUT=OUT0
+
+.search REGISTRO.blif
+
+.end

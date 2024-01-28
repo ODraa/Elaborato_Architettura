@@ -1,0 +1,14 @@
+.model UGUALE2
+
+.inputs A1 A0 B1 B0
+.outputs OUT
+
+.subckt XNOR A=A1 B=B1 OUT=X1
+.subckt XNOR A=A0 B=B0 OUT=X0
+
+.names X1 X0 OUT
+11 1
+
+.search COMPARATORE.blif
+
+.end
