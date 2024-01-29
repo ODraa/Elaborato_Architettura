@@ -1,7 +1,10 @@
 .model XNOR
+
 .inputs A B
 .outputs OUT
+
 .names A B OUT
+00 1
 11 1
 
 .end

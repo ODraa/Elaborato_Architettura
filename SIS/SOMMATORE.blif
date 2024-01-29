@@ -1,7 +1,7 @@
 .model SOMMATORE
 
-.inputs A B cin
-.outputs OUT cout
+.inputs A B CIN
+.outputs OUT COUT
 
 .names A B K
 10 1

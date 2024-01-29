@@ -1,4 +1,4 @@
-.model UGUALE2
+.model COMPARATORE5
 
 .inputs A4 A3 A2 A1 A0 B4 B3 B2 B1 B0
 .outputs OUT
@@ -12,6 +12,6 @@
 .names  X4 X3 X2 X1 X0 OUT
 11111 1
 
-.search COMPARATORE.blif
+.search XNOR.blif
 
 .end
