@@ -1,0 +1,18 @@
+.model FMS
+.start_kiss
+
+.i 2 # Number of inputs
+.o 2 # Number of outputs
+.r IDLE # Name of the reset state / start-state
+
+0- IDLE IDLE 00
+1- IDLE SETUP 01
+1- SETUP SETUP 01
+0- SETUO GIOCATA 10
+00 GIOCATA GIOCATA 00
+1- GIOCATA SETUP 01
+01 GIOCATA TERMINATA 00
+-- TERMINATA IDLE 00
+
+.end_kiss
+.end

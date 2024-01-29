@@ -1,0 +1,90 @@
+.model DATAPATH
+
+# -------------------------------
+# INPUT DATAPATH:
+
+# PRIMO             (2bit)
+# SECONDO           (2bit)
+# INIZIO SETUP      (1bit)
+# INIZIO CONTO      (1bit)
+
+# -------------------------------
+# OUTPUT DATAPATH:
+
+# MANCHE            (2bit)
+# PARTITA           (2bit)
+# FINE CONTO        (1bit)
+
+.inputs INIZIO_SETUP INIZIO_CONTO PRIMO1 PRIMO0 SECONDO1 SECONDO0
+.outputs FINE_CONTO MANCHE1 MANCHE0 PARTITA1 PARTITA0
+
+# DEFINIZIONE DELLE COSTANTI
+
+
+# -----------------------------
+# CONTROLLO NUM DI MANCHE
+# -----------------------------
+
+# -----------------------------
+# CONTROLLO VINCITORE MANCHE
+# -----------------------------
+
+
+.end
+
+
+###### DICHIRAZIONE DELLE COSTANTI UTILIZZATE ######
+
+# costante 00
+.model costante_00
+.outputs OUT1 OUT0
+.end
+
+# costante 01
+.model costante_01
+.outputs OUT1 OUT0
+.names OUT0
+1
+.end
+
+# costante 10
+.model costante_10
+.outputs OUT1 OUT0
+.names OUT1
+1
+.end
+
+# costante 11
+.model costante_11
+.outputs OUT1 OUT0
+.names OUT0
+1
+.names OUT1
+1
+.end
+
+# costante 00000
+.model costante_00000
+.outputs OUT4 OUT3 OUT2 OUT1 OUT0
+.end
+
+# costante 00001
+.model costante_00001
+.outputs OUT4 OUT3 OUT2 OUT1 OUT0
+.names OUT0
+1
+.end
+
+# costante 00010
+.model costante_00010
+.outputs OUT4 OUT3 OUT2 OUT1 OUT0
+.names OUT1
+1
+.end
+
+# costante 00100
+.model costante_00100
+.outputs OUT4 OUT3 OUT2 OUT1 OUT0
+.names OUT2
+1
+.end
