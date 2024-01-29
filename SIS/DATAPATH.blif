@@ -18,16 +18,43 @@
 .inputs INIZIO_SETUP INIZIO_CONTO PRIMO1 PRIMO0 SECONDO1 SECONDO0
 .outputs FINE_CONTO MANCHE1 MANCHE0 PARTITA1 PARTITA0
 
+
 # DEFINIZIONE DELLE COSTANTI
+.subckt costante_00 OUT1=C01 OUT0=C02 # costante a 2 bit di 00
+.subckt costante_01 OUT1=C03 OUT0=C04 # costante a 2 bit di 01
+.subckt costante_10 OUT1=C05 OUT0=C06 # costante a 2 bit di 10
+.subckt costante_11 OUT1=C07 OUT0=C08 # costante a 2 bit di 11
+
+
 
 
 # -----------------------------
 # CONTROLLO NUM DI MANCHE
 # -----------------------------
 
+
+
+
+
+
+
 # -----------------------------
 # CONTROLLO VINCITORE MANCHE
 # -----------------------------
+
+.subckt REGISTRO2 A1=PRIMO1 A0=PRIMO0 # memorizza mossa di PRIMO
+.subckt REGISTRO2 A1=SECONDO1 A0=SECONDO0 # memorizza mossa di SECONDO
+
+
+# registro usato per la concatenazione dei segnali PRIMO e SECONDO
+# per correttezza logica la concatenazione è {SECONDO, PRIMO}
+.subckt REGISTRO4 A3=SECONDO1 A2=SECONDO0 A1=PRIMO1 A0=PRIMO0
+
+# mux che data la concatenazione restituisce il vincitore della manche
+.subckt MUX_1 SEL3=A3 SEL2=A2 SEL1=A1 SEL0=A0 A1=C01 A0=C02 B1=C05 B0=C06 C1=C03 C0=C04 D1=C05 D0=C06 E1=C03 E0=C04 F1=C07 F0=C08 G1=C05 G0=C06 H1=C05 H0=C06 I1=C05 I0=C06 J1=C03 J0=C04 K1=C07 K0=C08 L1=C05 L0=C06 M1=C03 M0=C04 N1=C03 N0=C04 O1=C03 O0=C04 P1=C01 P0=C02 \ OUT1=M1 OUT0=M0
+
+
+
 
 
 .end
@@ -88,3 +115,9 @@
 .names OUT2
 1
 .end
+
+# IMPORTAZIONE DEI VARI COMPONENTI
+
+.search MUX_1.blif
+.search REGISTRO2.blif
+.search REGISTRO4.blif
