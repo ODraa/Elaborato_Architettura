@@ -15,15 +15,20 @@
 # PARTITA           (2bit)
 # FINE CONTO        (1bit)
 
-.inputs INIZIO_SETUP INIZIO_CONTO PRIMO1 PRIMO0 SECONDO1 SECONDO0
-.outputs FINE_CONTO MANCHE1 MANCHE0 PARTITA1 PARTITA0
+# .inputs INIZIO_SETUP INIZIO_CONTO SECONDO1 SECONDO0 PRIMO1 PRIMO0
+# .outputs FINE_CONTO MANCHE1 MANCHE0 PARTITA1 PARTITA0
+
+.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0
+.outputs MANCHE1 MANCHE0
+
+
 
 
 # DEFINIZIONE DELLE COSTANTI
-.subckt costante_00 OUT1=C01 OUT0=C02 # costante a 2 bit di 00
-.subckt costante_01 OUT1=C03 OUT0=C04 # costante a 2 bit di 01
-.subckt costante_10 OUT1=C05 OUT0=C06 # costante a 2 bit di 10
-.subckt costante_11 OUT1=C07 OUT0=C08 # costante a 2 bit di 11
+.subckt costante_00 OUT1=c01 OUT0=c02 # costante a 2 bit di 00
+.subckt costante_01 OUT1=c03 OUT0=c04 # costante a 2 bit di 01
+.subckt costante_10 OUT1=c05 OUT0=c06 # costante a 2 bit di 10
+.subckt costante_11 OUT1=c07 OUT0=c08 # costante a 2 bit di 11
 
 
 
@@ -42,8 +47,8 @@
 # CONTROLLO VINCITORE MANCHE
 # -----------------------------
 
-.subckt REGISTRO2 A1=PRIMO1 A0=PRIMO0 # memorizza mossa di PRIMO
-.subckt REGISTRO2 A1=SECONDO1 A0=SECONDO0 # memorizza mossa di SECONDO
+#.subckt REGISTRO2 A1=PRIMO1 A0=PRIMO0 # memorizza mossa di PRIMO
+#.subckt REGISTRO2 A1=SECONDO1 A0=SECONDO0 # memorizza mossa di SECONDO
 
 
 # registro usato per la concatenazione dei segnali PRIMO e SECONDO
@@ -51,7 +56,31 @@
 .subckt REGISTRO4 A3=SECONDO1 A2=SECONDO0 A1=PRIMO1 A0=PRIMO0
 
 # mux che data la concatenazione restituisce il vincitore della manche
-.subckt MUX_1 SEL3=A3 SEL2=A2 SEL1=A1 SEL0=A0 A1=C01 A0=C02 B1=C05 B0=C06 C1=C03 C0=C04 D1=C05 D0=C06 E1=C03 E0=C04 F1=C07 F0=C08 G1=C05 G0=C06 H1=C05 H0=C06 I1=C05 I0=C06 J1=C03 J0=C04 K1=C07 K0=C08 L1=C05 L0=C06 M1=C03 M0=C04 N1=C03 N0=C04 O1=C03 O0=C04 P1=C01 P0=C02 \ OUT1=M1 OUT0=M0
+.subckt MUX_1 SEL3=A3 SEL2=A2 SEL1=A1 SEL0=A0 A1=c07 A0=c08 B1=c05 B0=c06 C1=c03 C0=c04 D1=c05 D0=c06 E1=c03 E0=c04 F1=c07 F0=c08 G1=c05 G0=c06 H1=c05 H0=c06 I1=c05 I0=c06 J1=c03 J0=c04 K1=c07 K0=c08 L1=c05 L0=c06 M1=c03 M0=c04 N1=c03 N0=c04 O1=c03 O0=c04 P1=c01 P0=c02 \ OUT1=m1 OUT0=m0
+
+# mux che restituisce in uscita la mossa vincitrice
+.subckt MUX_3 SEL1=MANCHE1 SEL0=MANCHE0 A1=c01 A0=c02 B1=SECONDO1 B0=SECONDO0 C1=PRIMO1 C0=PRIMO0 D1=c01 D0=c01 \ OUT1=m3 OUT0=m2
+
+#.subckt REGISTRO2 A1=m3 A0=m2 OUT1=m3 OUT0=m2 # registro che memorizza la mossa vincitrice
+#.subckt REGISTRO2 A1=MANCHE1 A0=MANCHE0 OUT1=MANCHE1 OUT0=MANCHE0 # registro che memorizza il vincitore della manche precedente
+
+
+
+.subckt COMPARATORE2 A1=PRIMO1 A0=PRIMO0 B1=m3 B0=m2 OUT=cp0
+.subckt COMPARATORE2 A1=PRIMO1 A0=PRIMO0 B1=MANCHE1 B0=MANCHE0 OUT=cp1
+.subckt AND A=cp0 B=cp1 OUT=a0
+
+
+.subckt COMPARATORE2 A1=SECONDO1 A0=SECONDO0 B1=m3 B0=m2 OUT=cp2
+.subckt COMPARATORE2 A1=SECONDO1 A0=SECONDO0 B1=MANCHE1 B0=MANCHE0 OUT=cp3
+.subckt AND A=cp2 B=cp3 OUT=a1
+
+.subckt OR A=a0 B=a1 OUT=or0
+
+.subckt MUX_2 SEL=or0 A1=c01 A0=c02 B1=m1 B0=m0 \ OUT1=MANCHE1 OUT0=MANCHE0
+
+
+
 
 
 
@@ -119,5 +148,13 @@
 # IMPORTAZIONE DEI VARI COMPONENTI
 
 .search MUX_1.blif
-.search REGISTRO2.blif
+.search MUX_2.blif
+.search MUX_3.blif
+# .search REGISTRO2.blif
 .search REGISTRO4.blif
+.search COMPARATORE2.blif
+.search AND.blif
+.search OR.blif
+
+
+

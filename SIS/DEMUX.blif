@@ -16,7 +16,7 @@
 111 1
 .end
 
-# crezione DEMUX con sel(2bit) dato da propagare (5bit)
+# crezione DEMUX con sel(2bit), dato da propagare (5bit)
 
 .model DEMUX_5
 

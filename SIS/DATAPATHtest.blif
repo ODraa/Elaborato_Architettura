@@ -1,0 +1,135 @@
+.model DATAPATH_V2
+
+# -------------------------------
+# INPUT DATAPATH:
+
+# PRIMO             (2bit)
+# SECONDO           (2bit)
+# INIZIO SETUP      (1bit)
+# INIZIO CONTO      (1bit)
+
+# -------------------------------
+# OUTPUT DATAPATH:
+
+# MANCHE            (2bit)
+# PARTITA           (2bit)
+# FINE CONTO        (1bit)
+
+.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0
+.outputs MANCHE1 MANCHE0
+
+# richiamo delle costanti usate
+.subckt costante0 o0=zero                                     # costante per 0
+.subckt costante00 o1=c00 o0=c01                              # costante per 00
+.subckt costante01 o1=c02 o0=c03                              # costante per 01
+.subckt costante10 o1=c04 o0=c05                              # costante per 10
+.subckt costante11 o1=c06 o0=c07                              # costante per 11
+.subckt costante00000 o4=c08 o3=c09 o2=c10 o1=c11 o0=c12      # costante per 00000
+.subckt costante00000 o4=c13 o3=c14 o2=c15 o1=c16 o0=c17      # costante per 00001
+
+
+# -----------------------------
+# CONTROLLO VINCITORE MANCHE
+# -----------------------------
+
+.subckt MUX_1 SEL3=SECONDO1 SEL2=SECONDO0 SEL1=PRIMO1 SEL0=PRIMO0 A1=c00 A0=c01 B1=c02 B0=c03 C1=c02 C0=c03 D1=c02 D0=c03 E1=c04 E0=c05 F1=c06 F0=c07 G1=c02 G0=c03 H1=c04 H0=c05 I1=c04 I0=c05 J1=c04 J0=c05 K1=c06 K0=c07 L1=c02 L0=c03 M1=c04 M0=c05 N1=c02 N0=c03 O1=c04 O0=c05 P1=c06 P0=c07 \ OUT1=m1 OUT0=m0
+
+.subckt MUX_2 SEL=or0 A1=m1 A0=m0 B1=c00 B0=c01 \ OUT1=MANCHE1 OUT0=MANCHE0
+
+.subckt MUX_3 SEL1=MANCHE1 SEL0=MANCHE0 A1=c00 A0=c01 B1=PRIMO1 B0=PRIMO0 C1=SECONDO1 C0=SECONDO0 D1=c00 D0=c01 \ OUT1=m3 OUT0=m2
+
+
+.subckt COMPARATORE2 A1=MANCHE1 A0=MANCHE0 B1=c02 B0=c03 OUT=u0
+.subckt COMPARATORE2 A1=m3 A0=m2 B1=PRIMO1 B0=PRIMO0 OUT=u1
+.subckt AND A=u0 B=u1 OUT=a0
+
+
+.subckt COMPARATORE2 A1=MANCHE1 A0=MANCHE0 B1=c04 B0=c05 OUT=u2
+.subckt COMPARATORE2 A1=m3 A0=m2 B1=SECONDO1 B0=SECONDO0 OUT=u3
+.subckt AND A=u2 B=u3 OUT=a1
+
+.subckt OR A=a0 B=a1 OUT=or0
+
+# -----------------------------
+# CONTROLLO FINE PARTITA
+# -----------------------------
+
+.subckt MUX_5 SEL1=MANCHE1 SEL0=MANCHE0 A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4= B3= B2= B1= B0= C4= C3= C2= C1= C0= D4= D3= D2= D1= D0= \ OUT4=m8 OUT3=m7 OUT3=m6 OUT1=m5 OUT0=m4
+
+# RICONTROLLA SOMMATORE.blif
+.subckt SOMMATORE5 A=c13 A=c14 A=c15 A=c16 A=c17 B=m8 B=m7 B=m6 B=m5 B=m4 CIN=zero \ OUT4=s4 OUT3=s3 OUT2=s2 OUT1=s1 OUT0=s0 COUT=COUT
+
+.subckt DEMUX_5 SEL1=MANCHE1 SEL0=MANCHE0 IN4= IN3= IN2= IN1= IN0= \ X4= X3= X2= X1= X0= Y4= Y3= Y2= Y1= Y0= Z4= Z3= Z2= Z1= Z0= W4= W3= W2= W1= W0=
+
+
+.end
+
+
+# importazione dei file utilizzati
+.search MUX_1.blif
+.search MUX_2.blif
+.search MUX_3.blif
+.search MUX_5.blif
+.search DEMUX.blif
+.search COMPARATORE2.blif
+.search SOMMATORE5.blif
+.search AND.blif
+.search OR.blif
+
+
+
+
+
+# dichiarazione delle costanti usate nel circuito
+
+.model costante0
+.outputs o0
+.names
+.end
+# ------------------
+.model costante00
+.outputs o1 o0
+.names o1
+.names o0
+.end
+# ------------------
+.model costante01
+.outputs o1 o0
+.names o1
+.names o0
+1
+.end
+# ------------------
+.model costante10
+.outputs o1 o0
+.names o1
+1
+.names o0
+.end
+# ------------------
+.model costante11
+.outputs o1 o0
+.names o1
+1
+.names o0
+1
+.end
+# ------------------
+.model costante00000
+.outputs o4 o3 o2 o1 o0
+.names o4
+.names o3
+.names o2
+.names o1
+.names o0
+.end
+# ------------------
+.model costante00001
+.outputs o4 o3 o2 o1 o0
+.names o4
+.names o3
+.names o2
+.names o1
+.names o0
+1
+.end
