@@ -15,7 +15,7 @@
 # PARTITA           (2bit)
 # FINE CONTO        (1bit)
 
-.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0
+.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0 INIZIO_CONTO INIZIO_SETUP
 .outputs MANCHE1 MANCHE0
 
 # richiamo delle costanti usate
@@ -26,7 +26,17 @@
 .subckt costante11 o1=c06 o0=c07                              # costante per 11
 .subckt costante00000 o4=c08 o3=c09 o2=c10 o1=c11 o0=c12      # costante per 00000
 .subckt costante00000 o4=c13 o3=c14 o2=c15 o1=c16 o0=c17      # costante per 00001
+.subckt costante00100 o4=c18 o3=c19 o2=c20 o1=c21 o0=c22      # costante per 00100
 
+# -----------------------------
+# CONTROLLO LOGICA DI SETUP
+# -----------------------------
+
+.subckt SOMMATORE5 A4=zero A3=SECONDO1 A2=SECONDO0 A1=PRIMO1 A0=PRIMO0 B4=c18 B3=c19 B2=c20 B1=c21 B0=c22 CIN=zero \ OUT4=s19 OUT3=s18 OUT2=s17 OUT1=s16 OUT0=s15 COUT=COUT
+
+.subckt MUX_6 SEL=INIZIO_SETUP A4=rg19 A3=rg18 A2=rg17 A1=rg16 A0=rg15 B4=s19 B3=s18 B2=s17 B1=s16 B0=s15 \ OUT4=m28 OUT3=m27 OUT2=m26 OUT1=m25 OUT0=m24
+
+.subckt REGISTRO5 A4=m28 A3=m27 A2=m26 A1=m25 A0=m24 OUT4=rg19 OUT3=rg18 OUT2=rg17 OUT1=rg16 OUT0=rg15
 
 # -----------------------------
 # CONTROLLO VINCITORE MANCHE
@@ -38,6 +48,9 @@
 
 .subckt MUX_3 SEL1=MANCHE1 SEL0=MANCHE0 A1=c00 A0=c01 B1=PRIMO1 B0=PRIMO0 C1=SECONDO1 C0=SECONDO0 D1=c00 D0=c01 \ OUT1=m3 OUT0=m2
 
+#########################################################################################
+# RICONTROLLA L'EVENTUALE USO DEI REGISTRI MOSSA VINCITRICE E VINCITORE MANCHE PRECEDENTE
+#########################################################################################
 
 .subckt COMPARATORE2 A1=MANCHE1 A0=MANCHE0 B1=c02 B0=c03 OUT=u0
 .subckt COMPARATORE2 A1=m3 A0=m2 B1=PRIMO1 B0=PRIMO0 OUT=u1
@@ -54,13 +67,29 @@
 # CONTROLLO FINE PARTITA
 # -----------------------------
 
-.subckt MUX_5 SEL1=MANCHE1 SEL0=MANCHE0 A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4= B3= B2= B1= B0= C4= C3= C2= C1= C0= D4= D3= D2= D1= D0= \ OUT4=m8 OUT3=m7 OUT3=m6 OUT1=m5 OUT0=m4
+.subckt MUX_5 SEL1=MANCHE1 SEL0=MANCHE0 A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=rg5 B3=rg6 B2=rg7 B1=rg8 B0=rg9 C4=rg14 C3=rg13 C2=rg12 C1=rg11 C0=rg10 D4=rg4 D3=rg3 D2=rg2 D1=rg1 D0=rg0 \ OUT4=m8 OUT3=m7 OUT3=m6 OUT1=m5 OUT0=m4
 
 # RICONTROLLA SOMMATORE.blif
-.subckt SOMMATORE5 A=c13 A=c14 A=c15 A=c16 A=c17 B=m8 B=m7 B=m6 B=m5 B=m4 CIN=zero \ OUT4=s4 OUT3=s3 OUT2=s2 OUT1=s1 OUT0=s0 COUT=COUT
+.subckt SOMMATORE5 A4=c13 A3=c14 A2=c15 A1=c16 A0=c17 B4=m8 B3=m7 B2=m6 B1=m5 B0=m4 CIN=zero \ OUT4=s4 OUT3=s3 OUT2=s2 OUT1=s1 OUT0=s0 COUT=COUT
 
 # r19, r18, r17, r16, r15 non verranno mai richiamati
-.subckt DEMUX_5 SEL1=MANCHE1 SEL0=MANCHE0 IN4=s4 IN3=s3 IN2=s2 IN1=s1 IN0=s0 \ X4=r19 X3=r18 X2=r17 X1=r16 X0=r15 Y4=r14 Y3=r13 Y2=r12 Y1=r11 Y0=r10 Z4=r9 Z3=r8 Z2=r7 Z1=r6 Z0=r5 W4=r4 W3=r3 W2=r2 W1=r1 W0=r0
+.subckt DEMUX_5 SEL1=MANCHE1 SEL0=MANCHE0 IN4=s4 IN3=s3 IN2=s2 IN1=s1 IN0=s0 \ X4= X3= X2= X1= X0= Y4=r14 Y3=r13 Y2=r12 Y1=r11 Y0=r10 Z4=r9 Z3=r8 Z2=r7 Z1=r6 Z0=r5 W4=r4 W3=r3 W2=r2 W1=r1 W0=r0
+
+# MUX di di controllo per inoltrare il dato dal DEMUX al registro corrispondente e in caso INIZIO_CONTO = 0 resettarli
+.subckt MUX_4 SEL=INIZIO_CONTO A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=r4 B3=r3 B2=r2 B1=r1 B0=r0 \ OUT0=m13 OUT1=m12 OUT2=m11 OUT3=m10 OUT4=m9
+.subckt MUX_4 SEL=INIZIO_CONTO A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=r9 B3=r8 B2=r7 B1=r6 B0=r5 \ OUT0=m18 OUT1=m17 OUT2=m16 OUT3=m15 OUT4=m14
+.subckt MUX_4 SEL=INIZIO_CONTO A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=r14 B3=r13 B2=r12 B1=r11 B0=r10 \ OUT0=m23 OUT1=m22 OUT2=m21 OUT3=m20 OUT4=m19
+
+
+.subckt REGISTRO5 A4=m13 A3=m12 A2=m11 A1=m10 A0=m9 OUT4=rg4 OUT3=rg3 OUT2=rg2 OUT1=rg1 OUT0=rg0             # REG MANCHE PAREGGIATA
+.subckt REGISTRO5 A4=m18 A3=m17 A2=m16 A1=m15 A0=m14 OUT4=rg9 OUT3=rg8 OUT2=rg7 OUT1=rg6 OUT0=rg5            # REG VITTORIE MANCHE PRIMO
+.subckt REGISTRO5 A4=m23 A3=m22 A2=m21 A1=m20 A0=m19 OUT4=rg14 OUT3=rg13 OUT2=rg12 OUT1=rg11 OUT0=rg10       # REG VITTORIE MANCHE SECONDO
+
+
+.subckt SOMMATORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 CIN=zero \ OUT4=s9 OUT3=s8 OUT2=s7 OUT1=s6 OUT0=s5 COUT=COUT
+.subckt SOMMATORE5 A4=s9 A3=s8 A2=s7 A1=s6 A0=s5 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 CIN=zero \ OUT4=s14 OUT3=s13 OUT2=s12 OUT1=s11 OUT0=s10 COUT=COUT
+
+.subckt COMPARATORE5 A4=s14 A3=s13 A2=s12 A1=s11 A0=s10 B4=rg19 B3=rg18 B2=rg17 B1=rg16 B0=rg15 OUT=u4
 
 
 .end
@@ -70,12 +99,16 @@
 .search MUX_1.blif
 .search MUX_2.blif
 .search MUX_3.blif
+.search MUX_4.blif
 .search MUX_5.blif
+.search MUX_6.blif
 .search DEMUX.blif
 .search COMPARATORE2.blif
+.search COMPARATORE5.blif
 .search SOMMATORE5.blif
 .search AND.blif
 .search OR.blif
+.search REGISTRO5.blif
 
 
 
@@ -133,4 +166,14 @@
 .names o1
 .names o0
 1
+.end
+# ------------------
+.model costante00100
+.outputs o4 o3 o2 o1 o0
+.names o4
+.names o3
+.names o2
+1
+.names o1
+.names o0
 .end
