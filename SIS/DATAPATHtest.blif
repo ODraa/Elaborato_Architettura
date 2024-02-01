@@ -16,7 +16,7 @@
 # FINE CONTO        (1bit)
 
 .inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0 INIZIO_CONTO INIZIO_SETUP
-.outputs MANCHE1 MANCHE0
+.outputs MANCHE1 MANCHE0 FINE_CONTO
 
 # richiamo delle costanti usate
 .subckt costante0 o0=zero                                     # costante per 0
@@ -27,6 +27,8 @@
 .subckt costante00000 o4=c08 o3=c09 o2=c10 o1=c11 o0=c12      # costante per 00000
 .subckt costante00000 o4=c13 o3=c14 o2=c15 o1=c16 o0=c17      # costante per 00001
 .subckt costante00100 o4=c18 o3=c19 o2=c20 o1=c21 o0=c22      # costante per 00100
+.subckt costante00010 o4=c23 o3=c24 o2=c25 o1=c26 o0=c27      # costante per 00010
+
 
 # -----------------------------
 # CONTROLLO LOGICA DI SETUP
@@ -86,10 +88,39 @@
 .subckt REGISTRO5 A4=m23 A3=m22 A2=m21 A1=m20 A0=m19 OUT4=rg14 OUT3=rg13 OUT2=rg12 OUT1=rg11 OUT0=rg10       # REG VITTORIE MANCHE SECONDO
 
 
-.subckt SOMMATORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 CIN=zero \ OUT4=s9 OUT3=s8 OUT2=s7 OUT1=s6 OUT0=s5 COUT=COUT
-.subckt SOMMATORE5 A4=s9 A3=s8 A2=s7 A1=s6 A0=s5 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 CIN=zero \ OUT4=s14 OUT3=s13 OUT2=s12 OUT1=s11 OUT0=s10 COUT=COUT
+.subckt SOMMATORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 CIN=zero \ OUT4=s9 OUT3=s8 OUT2=s7 OUT1=s6 OUT0=s5 COUT=COUT      # TORNA LA SOMMA DI MANCHE_VINTE_PRIMO + MANCHE_VINTE_SECONDO
+.subckt SOMMATORE5 A4=s9 A3=s8 A2=s7 A1=s6 A0=s5 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 CIN=zero \ OUT4=s14 OUT3=s13 OUT2=s12 OUT1=s11 OUT0=s10 COUT=COUT           # TORNA LA SOMMA DI TUTTI I REG DI CONTA
 
 .subckt COMPARATORE5 A4=s14 A3=s13 A2=s12 A1=s11 A0=s10 B4=rg19 B3=rg18 B2=rg17 B1=rg16 B0=rg15 OUT=u4
+
+###########################################################
+# RICONTROLLA IL CORRETTO FUNZIONAMENTO DEL MAGGIOREUGUALE
+###########################################################
+
+.subckt MAGGIOREUGUALE C4=s14 C3=s13 C2=s12 C1=s11 C0=s10 D4=c18 D3=c19 D2=c20 D1=c21 D0=c22 OUT=mu0
+
+.subckt SOTTRATTORE5 A4=rg9 A3=rg8 A2=rg7 A1=rg6 A0=rg5 B4=rg14 B3=rg13 B2=rg12 B1=rg11 B0=rg10 \ OUT4=d4 OUT3=d3 OUT2=d2 OUT1=d1 OUT0=d0   # SOTTRATTORE MANCHE_VINTE_PRIMO - MANCHE_VINTE_SECONDO
+.subckt MAGGIOREUGUALE C4=c23 C3=c24 C2=c25 C1=c26 C0=c27 D4=d4 D3=d3 D2=d2 D1=d1 D0=d0 OUT=mu1
+.subckt AND A=mu1 B=mu0 OUT=a2
+
+.subckt SOTTRATTORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 \ OUT4=d9 OUT3=d8 OUT2=d7 OUT1=d6 OUT0=d5   # SOTTRATTORE MANCHE_VINTE_SECONDO - MANCHE_VINTE_PRIMO
+.subckt MAGGIOREUGUALE C4=c23 C3=c24 C2=c25 C1=c26 C0=c27 D4=d9 D3=d8 D2=d7 D1=d6 D0=d5 OUT=mu2
+.subckt AND A=mu2 B=mu0 OUT=a3
+
+.subckt OR A=a3 B=a2 OUT=or1
+
+.subckt MUX_2 SEL=a2 A1=c06 A0=c07 B1=c02 B0=c03 \ OUT1=m25 OUT0=m24
+.subckt MUX_2 SEL=a3 A1=c06 A0=c07 B1=c04 B0=c05 \ OUT1=m27 OUT0=m26
+
+.subckt MUX_3 SEL1=m25 SEL0=m24 A1=c00 A0=c01 B1=c02 B0=c03 C1=m27 C0=m26 D1=m27 D0=m26 \ OUT1=m29 OUT0=m28
+
+
+# CONTROLLO DEL: SE IL NUMERO DI MANCHE DA GIOCARE E DISPARI, CHI HA IL VANTAGGIO DI 1 SULL'ALTRO VINCE LA PARTITA
+
+
+
+.subckt OR A=u4 B=or1 OUT=FINE_CONTO       # OR CHE RESTITUISCE IN OUTPUT FINE_CONTO (segnale di elaborazioe per la FSM)
+
 
 
 .end
@@ -109,6 +140,9 @@
 .search AND.blif
 .search OR.blif
 .search REGISTRO5.blif
+.search MAGGIOREUGUALE.blif
+.search SOTTRATTORE5.blif
+
 
 
 
@@ -175,5 +209,15 @@
 .names o2
 1
 .names o1
+.names o0
+.end
+# ------------------
+.model costante00010
+.outputs o4 o3 o2 o1 o0
+.names o4
+.names o3
+.names o2
+.names o1
+1
 .names o0
 .end

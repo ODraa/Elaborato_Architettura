@@ -1,7 +1,7 @@
 # Se il riporto della somma è 1 il numero è positivo, altrimenti sarebbe negativo in complemento a 2. 
 # In questo caso non controllo dal momento che il risultato dovrebbe essere sempre positivo
 
-.model SOTTRATTORE
+.model SOTTRATTORE5
 
 .inputs A4 A3 A2 A1 A0 B4 B3 B2 B1 B0
 .outputs  OUT4 OUT3 OUT2 OUT1 OUT0

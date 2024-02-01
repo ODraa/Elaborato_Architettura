@@ -1,4 +1,8 @@
 .model FMS
+
+.inputs
+.outputs 
+
 .start_kiss
 
 .i 2 # Number of inputs
