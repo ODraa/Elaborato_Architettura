@@ -3,6 +3,6 @@
 .inputs A
 .outputs OUT
 
-.latch A O re NIL 0
+.latch A OUT re NIL 0
 
 .end

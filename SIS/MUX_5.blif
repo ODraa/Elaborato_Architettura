@@ -1,4 +1,4 @@
-.model MUX_4
+.model MUX_5
 .inputs SEL1 SEL0 A4 A3 A2 A1 A0 B4 B3 B2 B1 B0 C4 C3 C2 C1 C0 D4 D3 D2 D1 D0
 .outputs OUT4 OUT3 OUT2 OUT1 OUT0
 

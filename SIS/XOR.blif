@@ -1,6 +1,6 @@
 .model XOR
 
-.names A B
+.inputs A B
 .outputs OUT
 
 .names A B OUT

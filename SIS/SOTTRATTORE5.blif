@@ -48,8 +48,8 @@
 
 .model COSTANTE1
 
-.outputs O0
-.names O0
+.outputs OUT0
+.names OUT0
 1
 .end
 
@@ -57,10 +57,9 @@
 
 .model COSTANTE0
 
-.outputs O0
-.names O0
+.outputs OUT0
+.names OUT0
 
 .end
-
 
 .search SOMMATORE5.blif

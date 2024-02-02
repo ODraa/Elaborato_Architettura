@@ -3,11 +3,11 @@
 .inputs A4 A3 A2 A1 A0 B4 B3 B2 B1 B0
 .outputs OUT
 
-.subckt XOR A=A4 B=A4 X=X4
-.subckt XOR A=A3 B=A3 X=X3
-.subckt XOR A=A2 B=A2 X=X2
-.subckt XOR A=A1 B=A1 X=X1
-.subckt XOR A=A0 B=A0 X=X0
+.subckt XOR A=A4 B=B4 OUT=X4
+.subckt XOR A=A3 B=B3 OUT=X3
+.subckt XOR A=A2 B=B2 OUT=X2
+.subckt XOR A=A1 B=B1 OUT=X1
+.subckt XOR A=A0 B=B0 OUT=X0
 
 .names A4 A3 A2 A1 A0 X4 X3 X2 X1 X0 OUT
 1----1---- 1
@@ -15,7 +15,6 @@
 --1--001-- 1
 ---1-0001- 1
 ----100001 1
-
 
 .search XOR.blif
 

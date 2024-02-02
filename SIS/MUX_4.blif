@@ -1,7 +1,7 @@
-.model MUX_5
+.model MUX_4
 
 .inputs SEL A4 A3 A2 A1 A0 B4 B3 B2 B1 B0
-.outputs OUT0 OUT1 OUT2 OUT3 OUT4
+.outputs OUT4 OUT3 OUT2 OUT1 OUT0
 
 .names SEL A4 B4 OUT4
 01- 1
@@ -23,4 +23,4 @@
 01- 1
 1-1 1
 
-.end
+.end 
