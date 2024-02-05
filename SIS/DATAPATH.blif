@@ -18,7 +18,6 @@
 .inputs SECONDO1 SECONDO0 PRIMO1 PRIMO0 INIZIO_CONTO INIZIO_SETUP
 .outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0
 
-# m38 m37 m36 m35 m34 m33 m32 m31 m30 m29
 
 # richiamo delle costanti usate
 .subckt costante0 o0=zero                                     # costante per 0
