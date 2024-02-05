@@ -9,11 +9,7 @@
 
 .names Z W OUT
 10 1
-11 1
-
-# .names Z OUT
-# 0 1
-# 1 1
+01 1
 
 .search MAGGIORE5.blif
 .search COMPARATORE5.blif
