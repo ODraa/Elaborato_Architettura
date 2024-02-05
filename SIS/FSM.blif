@@ -1,7 +1,7 @@
-.model FMS
+.model FSM
 
-.inputs
-.outputs 
+.inputs INIZIO FINE_CONTO
+.outputs INIZIO_CONTO INIZIO_SETUP
 
 .start_kiss
 

@@ -9,6 +9,6 @@
 .subckt SOMMATORE A=A3 B=B3 CIN=C2 OUT=OUT3 COUT=C3
 .subckt SOMMATORE A=A4 B=B4 CIN=C3 OUT=OUT4 COUT=COUT
 
-.search SOMMATORE.blif
-
 .end
+
+.search SOMMATORE.blif

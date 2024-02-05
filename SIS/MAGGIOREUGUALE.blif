@@ -5,9 +5,17 @@
 
 .subckt MAGGIORE5 A4=C4 A3=C3 A2=C2 A1=C1 A0=C0 B4=D4 B3=D3 B2=D2 B1=D1 B0=D0 OUT=Z
 
-.names Z OUT
-1 1
+.subckt COMPARATORE5 A4=C4 A3=C3 A2=C2 A1=C1 A0=C0 B4=D4 B3=D3 B2=D2 B1=D1 B0=D0 OUT=W
+
+.names Z W OUT
+10 1
+11 1
+
+# .names Z OUT
+# 0 1
+# 1 1
 
 .search MAGGIORE5.blif
+.search COMPARATORE5.blif
 
 .end

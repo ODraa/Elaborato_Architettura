@@ -9,6 +9,6 @@
 .subckt REGISTRO A=A1 OUT=OUT1
 .subckt REGISTRO A=A0 OUT=OUT0
 
-.search REGISTRO.blif
-
 .end
+
+.search REGISTRO.blif

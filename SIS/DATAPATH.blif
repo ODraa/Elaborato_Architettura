@@ -5,8 +5,8 @@
 
 # PRIMO             (2bit)
 # SECONDO           (2bit)
-# INIZIO SETUP      (1bit)
 # INIZIO CONTO      (1bit)
+# INIZIO SETUP      (1bit)
 
 # -------------------------------
 # OUTPUT DATAPATH:
@@ -15,11 +15,12 @@
 # PARTITA           (2bit)
 # FINE CONTO        (1bit)
 
-.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0 INIZIO_CONTO INIZIO_SETUP
-.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0 FINE_CONTO
+.inputs SECONDO1 SECONDO0 PRIMO1 PRIMO0 INIZIO_CONTO INIZIO_SETUP
+.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0 FINE_CONTO \ s9 s8 s7 s6 s5
 
 # richiamo delle costanti usate
 .subckt costante0 o0=zero                                     # costante per 0
+.subckt costante1 o0=uno
 .subckt costante00 o1=c00 o0=c01                              # costante per 00
 .subckt costante01 o1=c02 o0=c03                              # costante per 01
 .subckt costante10 o1=c04 o0=c05                              # costante per 10
@@ -34,11 +35,11 @@
 # CONTROLLO LOGICA DI SETUP
 # -----------------------------
 
-.subckt SOMMATORE5 A4=zero A3=SECONDO1 A2=SECONDO0 A1=PRIMO1 A0=PRIMO0 B4=c18 B3=c19 B2=c20 B1=c21 B0=c22 CIN=zero \ OUT4=s19 OUT3=s18 OUT2=s17 OUT1=s16 OUT0=s15 COUT=COUT
+.subckt SOMMATORE5 A4=zero A3=SECONDO1 A2=SECONDO0 A1=PRIMO1 A0=PRIMO0 B4=c18 B3=c19 B2=c20 B1=c21 B0=c22 CIN=zero \ OUT4=s19 OUT3=s18 OUT2=s17 OUT1=s16 OUT0=s15 COUT=cout
 
 .subckt MUX_4 SEL=INIZIO_SETUP A4=rg19 A3=rg18 A2=rg17 A1=rg16 A0=rg15 B4=s19 B3=s18 B2=s17 B1=s16 B0=s15 \ OUT4=m28 OUT3=m27 OUT2=m26 OUT1=m25 OUT0=m24
 
-.subckt REGISTRO5 A4=m28 A3=m27 A2=m26 A1=m25 A0=m24 OUT4=rg19 OUT3=rg18 OUT2=rg17 OUT1=rg16 OUT0=rg15 # REG NUMERO DI MANCHE
+.subckt REGISTRO5 A4=m28 A3=m27 A2=m26 A1=m25 A0=m24 OUT4=rg19 OUT3=rg18 OUT2=rg17 OUT1=rg16 OUT0=rg15    # REG NUMERO DI MANCHE
 
 # -----------------------------
 # CONTROLLO VINCITORE MANCHE
@@ -50,17 +51,17 @@
 
 .subckt MUX_3 SEL1=MANCHE1 SEL0=MANCHE0 A1=c00 A0=c01 B1=PRIMO1 B0=PRIMO0 C1=SECONDO1 C0=SECONDO0 D1=c00 D0=c01 \ OUT1=m3 OUT0=m2
 
-#########################################################################################
-# RICONTROLLA L'EVENTUALE USO DEI REGISTRI MOSSA VINCITRICE E VINCITORE MANCHE PRECEDENTE
-#########################################################################################
 
-.subckt COMPARATORE2 A1=MANCHE1 A0=MANCHE0 B1=c02 B0=c03 OUT=u0
-.subckt COMPARATORE2 A1=m3 A0=m2 B1=PRIMO1 B0=PRIMO0 OUT=u1
+.subckt REGISTRO2 A1=MANCHE1 A0=MANCHE0 OUT1=manche1 OUT0=manche0       # REG VINCITORE MANCHE PRECEDENTE
+.subckt REGISTRO2 A1=m3 A0=m2 OUT1=mv1 OUT0=mv0                         # REG MEM MOSSA VINCITRICE
+
+.subckt COMPARATORE2 A1=manche1 A0=manche0 B1=c02 B0=c03 OUT=u0
+.subckt COMPARATORE2 A1=mv1 A0=mv0 B1=PRIMO1 B0=PRIMO0 OUT=u1
 .subckt AND A=u0 B=u1 OUT=a0
 
 
-.subckt COMPARATORE2 A1=MANCHE1 A0=MANCHE0 B1=c04 B0=c05 OUT=u2
-.subckt COMPARATORE2 A1=m3 A0=m2 B1=SECONDO1 B0=SECONDO0 OUT=u3
+.subckt COMPARATORE2 A1=manche1 A0=manche0 B1=c04 B0=c05 OUT=u2
+.subckt COMPARATORE2 A1=mv1 A0=mv0 B1=SECONDO1 B0=SECONDO0 OUT=u3
 .subckt AND A=u2 B=u3 OUT=a1
 
 .subckt OR A=a0 B=a1 OUT=or0
@@ -69,10 +70,10 @@
 # CONTROLLO FINE PARTITA
 # -----------------------------
 
-.subckt MUX_5 SEL1=MANCHE1 SEL0=MANCHE0 A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=rg5 B3=rg6 B2=rg7 B1=rg8 B0=rg9 C4=rg14 C3=rg13 C2=rg12 C1=rg11 C0=rg10 D4=rg4 D3=rg3 D2=rg2 D1=rg1 D0=rg0 \ OUT4=m8 OUT3=m7 OUT2=m6 OUT1=m5 OUT0=m4
+.subckt MUX_5 SEL1=MANCHE1 SEL0=MANCHE0 A4=c08 A3=c09 A2=c10 A1=c11 A0=c12 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 C4=rg14 C3=rg13 C2=rg12 C1=rg11 C0=rg10 D4=rg4 D3=rg3 D2=rg2 D1=rg1 D0=rg0 \ OUT4=m8 OUT3=m7 OUT2=m6 OUT1=m5 OUT0=m4
 
 # RICONTROLLA SOMMATORE.blif
-.subckt SOMMATORE5 A4=c13 A3=c14 A2=c15 A1=c16 A0=c17 B4=m8 B3=m7 B2=m6 B1=m5 B0=m4 CIN=zero \ OUT4=s4 OUT3=s3 OUT2=s2 OUT1=s1 OUT0=s0 COUT=COUT
+.subckt SOMMATORE5 A4=zero A3=zero A2=zero A1=zero A0=uno B4=m8 B3=m7 B2=m6 B1=m5 B0=m4 CIN=cin \ OUT4=s4 OUT3=s3 OUT2=s2 OUT1=s1 OUT0=s0 COUT=COUT2
 
 # X4=r19, X3=r18, X2=r17, X1=r16, X0=r15 non verranno mai richiamati
 .subckt DEMUX_5 SEL1=MANCHE1 SEL0=MANCHE0 IN4=s4 IN3=s3 IN2=s2 IN1=s1 IN0=s0 \ Y4=r14 Y3=r13 Y2=r12 Y1=r11 Y0=r10 Z4=r9 Z3=r8 Z2=r7 Z1=r6 Z0=r5 W4=r4 W3=r3 W2=r2 W1=r1 W0=r0
@@ -88,8 +89,8 @@
 .subckt REGISTRO5 A4=m23 A3=m22 A2=m21 A1=m20 A0=m19 OUT4=rg14 OUT3=rg13 OUT2=rg12 OUT1=rg11 OUT0=rg10       # REG VITTORIE MANCHE SECONDO
 
 
-.subckt SOMMATORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 CIN=zero \ OUT4=s9 OUT3=s8 OUT2=s7 OUT1=s6 OUT0=s5 COUT=COUT      # TORNA LA SOMMA DI MANCHE_VINTE_PRIMO + MANCHE_VINTE_SECONDO
-.subckt SOMMATORE5 A4=s9 A3=s8 A2=s7 A1=s6 A0=s5 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 CIN=zero \ OUT4=s14 OUT3=s13 OUT2=s12 OUT1=s11 OUT0=s10 COUT=COUT           # TORNA LA SOMMA DI TUTTI I REG DI CONTA
+.subckt SOMMATORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 CIN=zero \ OUT4=s9 OUT3=s8 OUT2=s7 OUT1=s6 OUT0=s5 COUT=COUT3      # TORNA LA SOMMA DI MANCHE_VINTE_PRIMO + MANCHE_VINTE_SECONDO
+.subckt SOMMATORE5 A4=s9 A3=s8 A2=s7 A1=s6 A0=s5 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 CIN=zero \ OUT4=s14 OUT3=s13 OUT2=s12 OUT1=s11 OUT0=s10 COUT=COUT4           # TORNA LA SOMMA DI TUTTI I REG DI CONTA
 
 .subckt COMPARATORE5 A4=s14 A3=s13 A2=s12 A1=s11 A0=s10 B4=rg19 B3=rg18 B2=rg17 B1=rg16 B0=rg15 OUT=u4
 
@@ -103,21 +104,17 @@
 .subckt MAGGIOREUGUALE C4=c23 C3=c24 C2=c25 C1=c26 C0=c27 D4=d4 D3=d3 D2=d2 D1=d1 D0=d0 OUT=mu1
 .subckt AND A=mu1 B=mu0 OUT=a2
 
-.subckt SOTTRATTORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg4 B3=rg3 B2=rg2 B1=rg1 B0=rg0 \ OUT4=d9 OUT3=d8 OUT2=d7 OUT1=d6 OUT0=d5   # SOTTRATTORE MANCHE_VINTE_SECONDO - MANCHE_VINTE_PRIMO
+.subckt SOTTRATTORE5 A4=rg14 A3=rg13 A2=rg12 A1=rg11 A0=rg10 B4=rg9 B3=rg8 B2=rg7 B1=rg6 B0=rg5 \ OUT4=d9 OUT3=d8 OUT2=d7 OUT1=d6 OUT0=d5   # SOTTRATTORE MANCHE_VINTE_SECONDO - MANCHE_VINTE_PRIMO
 .subckt MAGGIOREUGUALE C4=c23 C3=c24 C2=c25 C1=c26 C0=c27 D4=d9 D3=d8 D2=d7 D1=d6 D0=d5 OUT=mu2
 .subckt AND A=mu2 B=mu0 OUT=a3
 
 .subckt OR A=a3 B=a2 OUT=or1
 
-# m24 = m29
-# m25 = m30
-
-
 
 .subckt MUX_2 SEL=a2 A1=c06 A0=c07 B1=c02 B0=c03 \ OUT1=m30 OUT0=m29   
 .subckt MUX_2 SEL=a3 A1=c06 A0=c07 B1=c04 B0=c05 \ OUT1=m32 OUT0=m31
 
-.subckt MUX_3 SEL1=m30 SEL0=m29 A1=c00 A0=c01 B1=c02 B0=c03 C1=m27 C0=m26 D1=m27 D0=m26 \ OUT1=m34 OUT0=m33
+.subckt MUX_3 SEL1=m30 SEL0=m29 A1=c00 A0=c01 B1=c02 B0=c03 C1=m32 C0=m31 D1=m32 D0=m31 \ OUT1=m34 OUT0=m33
 
 
 # CONTROLLO DEL: SE IL NUMERO DI MANCHE DA GIOCARE E DISPARI, CHI HA IL VANTAGGIO DI 1 SULL'ALTRO VINCE LA PARTITA
@@ -148,6 +145,12 @@
 ##################################################
 # DICHIARAZIONE DELLE COSTANTI USATE NEL CIRCUITO
 ##################################################
+
+.model costante1
+.outputs o0
+.names o0
+1
+.end
 
 .model costante0
 .outputs o0
@@ -236,6 +239,7 @@
 .search SOMMATORE5.blif
 .search AND.blif
 .search OR.blif
+.search REGISTRO2.blif
 .search REGISTRO5.blif
 .search MAGGIOREUGUALE.blif
 .search SOTTRATTORE5.blif
