@@ -10,10 +10,4 @@
 .end
 
 .search DATAPATH.blif
-.search FSM2.blif
-
-
-# .names INIZIO_SETUP MAN1 MANCHE1
-# 01 1
-# .names INIZIO_SETUP MAN0 MANCHE0
-# 01 1
+.search FSM_to_network.blif
