@@ -1,0 +1,392 @@
+.model FSMD
+.inputs INIZIO SECONDO1 SECONDO0 PRIMO1 PRIMO0
+.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0
+.latch    [4] LatchOut_v2   0
+.latch    INIZIO LatchOut_v3   0
+.latch    m08 rg08 re NIL 0
+.latch    m07 rg07 re NIL 0
+.latch    m06 rg06 re NIL 0
+.latch    m05 rg05 re NIL 0
+.latch    m04 rg04 re NIL 0
+.latch    m43 rg13 re NIL 0
+.latch    m42 rg12 re NIL 0
+.latch    m41 rg11 re NIL 0
+.latch    m40 rg10 re NIL 0
+.latch    m39 rg09 re NIL 0
+.latch    m38 rg18 re NIL 0
+.latch    m37 rg17 re NIL 0
+.latch    m36 rg16 re NIL 0
+.latch    m35 rg15 re NIL 0
+.latch    m34 rg14 re NIL 0
+.latch    m33 rg23 re NIL 0
+.latch    m32 rg22 re NIL 0
+.latch    m31 rg21 re NIL 0
+.latch    m30 rg20 re NIL 0
+.latch    m29 rg19 re NIL 0
+.latch    MANCHE1 rg01 re NIL 0
+.latch    MANCHE0 rg00 re NIL 0
+.latch    m03 rg03 re NIL 0
+.latch    m02 rg02 re NIL 0
+.names m01 [1409] MANCHE1
+11 1
+.names SECONDO0 PRIMO1 PRIMO0 m01 [1399] [1409] MANCHE0
+01---1 1
+---011 1
+--1-01 1
+101--1 1
+.names FCf a2 or2 [1389] PARTITA1
+100- 1
+1-10 1
+.names FCf a3 or2 [1388] PARTITA0
+100- 1
+1-10 1
+.names m05 m04 s16 [889] a2 a3 [1382] [1383] [1386] FCf
+----1---- 1
+-----1--- 1
+1111--111 1
+0101--111 1
+1010--111 1
+0000--111 1
+.names INIZIO LatchOut_v2 LatchOut_v3 [4]
+01- 1
+0-1 1
+.names INIZIO SECONDO1 SECONDO0 rg08 m08
+0--1 1
+111- 1
+.names INIZIO rg07 [1399] m07
+01- 1
+1-1 1
+.names INIZIO SECONDO0 rg06 m06
+10- 1
+0-1 1
+.names INIZIO PRIMO1 rg05 m05
+11- 1
+0-1 1
+.names INIZIO PRIMO0 rg04 m04
+11- 1
+0-1 1
+.names SECONDO1 SECONDO0 PRIMO1 PRIMO0 [1399] m01
+1--0- 1
+--0-1 1
+-111- 1
+.names SECONDO0 PRIMO1 PRIMO0 rg01 rg00 rg03 rg02 [1397] or0
+1--10-11 1
+0--10-01 1
+-110111- 1
+-010101- 1
+-100110- 1
+-000100- 1
+.names SECONDO1 PRIMO1 [1388] [1389] m03
+-10- 1
+1--0 1
+.names SECONDO0 PRIMO0 [1388] [1389] m02
+-10- 1
+1--0 1
+.names rg13 s09 [1411] [1414] m43
+-11- 1
+1--1 1
+.names rg12 s08 [1411] [1414] m42
+-11- 1
+1--1 1
+.names rg11 s07 [1411] [1414] m41
+-11- 1
+1--1 1
+.names rg10 [1395] [1411] [1414] m40
+-11- 1
+1--1 1
+.names m09 rg09 [1411] [1414] m39
+0-1- 1
+-1-1 1
+.names rg18 s09 [1413] [1417] m38
+1-1- 1
+-1-1 1
+.names rg17 s08 [1413] [1417] m37
+1-1- 1
+-1-1 1
+.names rg16 s07 [1413] [1417] m36
+1-1- 1
+-1-1 1
+.names rg15 [1395] [1413] [1417] m35
+1-1- 1
+-1-1 1
+.names [4] m09 rg14 [1388] [1413] m34
+--1-1 1
+10-0- 1
+.names rg23 s09 [1412] [1418] m33
+1-1- 1
+-1-1 1
+.names rg22 s08 [1412] [1418] m32
+1-1- 1
+-1-1 1
+.names rg21 s07 [1412] [1418] m31
+1-1- 1
+-1-1 1
+.names rg20 [1395] [1412] [1418] m30
+1-1- 1
+-1-1 1
+.names [4] m09 rg19 [1389] [1412] m29
+--1-1 1
+10-0- 1
+.names rg18 rg23 rg13 [1387] [1388] [1389] m13
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg17 rg22 rg12 [1387] [1388] [1389] m12
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg16 rg21 rg11 [1387] [1388] [1389] m11
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg15 rg20 rg10 [1387] [1388] [1389] m10
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg14 rg19 rg09 [1387] [1388] [1389] m09
+--10-- 1
+1---0- 1
+-1---0 1
+.names m13 [1421] s09
+11 1
+00 1
+.names m12 [1422] s08
+11 1
+00 1
+.names m11 [1423] s07
+11 1
+00 1
+.names [1392] [1407] s14
+01 1
+10 1
+.names [874] [1400] s13
+11 1
+00 1
+.names m32 m37 [874]
+01 1
+10 1
+.names m31 m36 [876]
+01 1
+10 1
+.names m30 m29 [878] [1007] [877]
+1-0- 1
+-110 1
+.names [878] [972] [1007] s11
+1-1 1
+-10 1
+.names m30 m35 [878]
+01 1
+10 1
+.names [1393] [1408] s19
+11 1
+00 1
+.names [883] [884] s18
+01 1
+10 1
+.names s13 m42 [883]
+01 1
+10 1
+.names [885] [886] [1398] [884]
+11- 1
+0-1 1
+.names [885] [886] s17
+01 1
+10 1
+.names m41 [1398] [885]
+01 1
+10 1
+.names s11 s16 [887] [886]
+-01 1
+1-0 1
+.names [887] [1424] s16
+11 1
+00 1
+.names s11 m40 [887]
+01 1
+10 1
+.names m39 [1007] [889]
+01 1
+10 1
+.names [966] [1401] d4
+11 1
+00 1
+.names m38 C4 [966]
+01 1
+10 1
+.names [968] [1402] d3
+01 1
+10 1
+.names m37 [979] [968]
+01 1
+10 1
+.names m36 [982] [970]
+01 1
+10 1
+.names m30 m29 [972] [895]
+01- 1
+100 1
+.names m29 [878] [972]
+01 1
+10 1
+.names m29 d4 d3 [972] [1007] [1385] [1390] a2
+0001011 1
+1000011 1
+.names [1009] [1403] d9
+11 1
+00 1
+.names [1001] [1012] [1000]
+1- 1
+-1 1
+.names [1001] [1404] d8
+01 1
+10 1
+.names m32 [1012] [1001]
+01 1
+10 1
+.names m31 [1015] [1003]
+01 1
+10 1
+.names m35 m34 [1005] [1004]
+01- 1
+100 1
+.names m34 [878] [1005]
+01 1
+10 1
+.names m34 m29 [1007]
+01 1
+10 1
+.names m34 d9 d8 [1005] [1007] [1385] [1391] a3
+0001011 1
+1000011 1
+.names d4 d3 [972] d9 d8 [1005] [1007] [1390] [1391] or2
+000---11- 1
+---0001-1 1
+.names m33 [1425] C4
+01 1
+10 1
+.names m32 [1426] [979]
+01 1
+10 1
+.names m31 [1427] [982]
+01 1
+10 1
+.names m38 [1428] [1009]
+01 1
+10 1
+.names m37 [1429] [1012]
+01 1
+10 1
+.names m36 [1430] [1015]
+01 1
+10 1
+.names m08 s19 [1382]
+11 1
+00 1
+.names m07 s18 [1383]
+11 1
+00 1
+.names s19 s18 s17 [1385]
+1-- 1
+-1- 1
+--1 1
+.names m06 s17 [1386]
+11 1
+00 1
+.names MANCHE1 MANCHE0 [1387]
+0- 1
+-0 1
+.names MANCHE1 MANCHE0 [1388]
+1- 1
+-0 1
+.names MANCHE1 MANCHE0 [1389]
+0- 1
+-1 1
+.names [970] [895] [1390]
+11 1
+00 1
+.names [1003] [1004] [1391]
+11 1
+00 1
+.names m38 m33 [1392]
+01 1
+10 1
+.names m43 s14 [1393]
+11 1
+00 1
+.names m10 m09 [1395]
+01 1
+10 1
+.names SECONDO1 rg03 [1397]
+11 1
+00 1
+.names [876] [877] [1398]
+01 1
+10 1
+.names SECONDO1 SECONDO0 [1399]
+01 1
+10 1
+.names m31 [876] [877] [1400]
+00- 1
+-10 1
+.names [968] [979] [1401]
+00 1
+.names [970] [895] [982] [1402]
+11- 1
+0-1 1
+.names m33 [1000] [1403]
+11 1
+00 1
+.names [1003] [1004] [1015] [1404]
+11- 1
+0-1 1
+.names m32 s13 [874] [1407]
+-01 1
+1-0 1
+.names s13 [883] [884] [1408]
+10- 1
+-11 1
+.names INIZIO or0 [1409]
+00 1
+.names [4] [1387] [1411]
+10 1
+.names [4] [1389] [1412]
+11 1
+.names [4] [1388] [1413]
+11 1
+.names [4] [1387] [1414]
+11 1
+.names MANCHE1 [4] [1417]
+01 1
+.names MANCHE0 [4] [1418]
+01 1
+.names m12 s08 [1421]
+0- 1
+-1 1
+.names m11 s07 [1422]
+0- 1
+-1 1
+.names m10 m09 [1423]
+0- 1
+-0 1
+.names [889] [1007] [1424]
+1- 1
+-0 1
+.names m32 [979] [1425]
+1- 1
+-1 1
+.names m31 [982] [1426]
+1- 1
+-1 1
+.names m30 m29 [1427]
+1- 1
+-1 1
+.names m37 [1012] [1428]
+1- 1
+-1 1
+.names m36 [1015] [1429]
+1- 1
+-1 1
+.names m35 m34 [1430]
+1- 1
+-1 1
+.end
