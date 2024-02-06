@@ -1,0 +1,46 @@
+.model FSM
+.inputs INIZIO FINE_CONTO
+.outputs INIZIO_CONTO INIZIO_SETUP
+.latch    [4] LatchOut_v2   0
+.latch    [5] LatchOut_v3   0
+.start_kiss
+.i 2
+.o 2
+.p 8
+.s 3
+.r IDLE
+0- IDLE IDLE 00
+1- IDLE SETUP 01
+1- SETUP SETUP 01
+01 SETUP IDLE 00
+00 SETUP GIOCATA 10
+00 GIOCATA GIOCATA 10
+1- GIOCATA SETUP 01
+01 GIOCATA GIOCATA 00
+.end_kiss
+.latch_order LatchOut_v2 LatchOut_v3
+.code IDLE 00
+.code SETUP 01
+.code GIOCATA 10
+.names INIZIO FINE_CONTO LatchOut_v2 LatchOut_v3 [4]
+0-1- 1
+00-1 1
+.names INIZIO [5]
+1 1
+.names INIZIO FINE_CONTO LatchOut_v2 LatchOut_v3 INIZIO_CONTO
+001- 1
+00-1 1
+.names INIZIO INIZIO_SETUP
+1 1
+.exdc 
+.inputs INIZIO FINE_CONTO LatchOut_v2 LatchOut_v3
+.outputs [4] [5] INIZIO_CONTO INIZIO_SETUP
+.names LatchOut_v2 LatchOut_v3 [4]
+11 1
+.names LatchOut_v2 LatchOut_v3 [5]
+11 1
+.names LatchOut_v2 LatchOut_v3 INIZIO_CONTO
+11 1
+.names LatchOut_v2 LatchOut_v3 INIZIO_SETUP
+11 1
+.end
