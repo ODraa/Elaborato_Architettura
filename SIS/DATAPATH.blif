@@ -29,6 +29,8 @@
 .subckt costante00001 o4=c13 o3=c14 o2=c15 o1=c16 o0=c17      # costante per 00001
 .subckt costante00100 o4=c18 o3=c19 o2=c20 o1=c21 o0=c22      # costante per 00100
 .subckt costante00010 o4=c23 o3=c24 o2=c25 o1=c26 o0=c27      # costante per 00010
+.subckt costante11100 o4=c28 o3=c29 o2=c30 o1=c31 o0=c32      # costante per 11100
+
 
 
 # -----------------------------
@@ -102,12 +104,18 @@
 .subckt MAGGIOREUGUALE C4=s19 C3=s18 C2=s17 C1=s16 C0=s15 D4=c18 D3=c19 D2=c20 D1=c21 D0=c22 \ OUT=mu0
 
 .subckt SOTTRATTORE5 A4=m38 A3=m37 A2=m36 A1=m35 A0=m34 B4=m33 B3=m32 B2=m31 B1=m30 B0=m29 \ OUT4=d4 OUT3=d3 OUT2=d2 OUT1=d1 OUT0=d0
-.subckt COMPARATORE5 A4=d4 A3=d3 A2=d2 A1=d1 A0=d0 B4=c23 B3=c24 B2=c25 B1=c26 B0=c27 \ OUT=u5
-.subckt AND A=u5 B=mu0 OUT=a2
+.subckt MAGGIOREUGUALE C4=d4 C3=d3 C2=d2 C1=d1 C0=d0 D4=c23 D3=c24 D2=c25 D1=c26 D0=c27 \ OUT=u5
+.subckt MINORE5 A4=d4 A3=d3 A2=d2 A1=d1 A0=d0 B4=c28 B3=c29 B2=c30 B1=c31 B0=c32 \ OUT=min0
+.subckt AND A=u5 B=min0 \ OUT=a100
+
+.subckt AND A=a100 B=mu0 OUT=a2
 
 .subckt SOTTRATTORE5 A4=m33 A3=m32 A2=m31 A1=m30 A0=m29 B4=m38 B3=m37 B2=m36 B1=m35 B0=m34 \ OUT4=d9 OUT3=d8 OUT2=d7 OUT1=d6 OUT0=d5
-.subckt COMPARATORE5 A4=d9 A3=d8 A2=d7 A1=d6 A0=d5 B4=c23 B3=c24 B2=c25 B1=c26 B0=c27 \ OUT=u6
-.subckt AND A=u6 B=mu0 OUT=a3
+.subckt MAGGIOREUGUALE C4=d9 C3=d8 C2=d7 C1=d6 C0=d5 D4=c23 D3=c24 D2=c25 D1=c26 D0=c27 \ OUT=u6
+.subckt MINORE5 A4=d9 A3=d8 A2=d7 A1=d6 A0=d5 B4=c28 B3=c29 B2=c30 B1=c31 B0=c32 \ OUT=min1
+.subckt AND A=u6 B=min1 \ OUT=a101
+
+.subckt AND A=a101 B=mu0 OUT=a3
 
 .subckt OR A=a2 B=a3 OUT=or1
 
@@ -215,6 +223,18 @@
 1
 .names o0
 .end
+# ------------------
+.model costante11100
+.outputs o4 o3 o2 o1 o0
+.names o4
+1
+.names o3
+1
+.names o2
+1
+.names o1
+.names o0
+.end
 
 ##################################################
 # IMPORTAZIONE FILE UTILIZZATI PER IL DATAPATH
@@ -234,4 +254,4 @@
 .search REGISTRO5.blif
 .search MAGGIOREUGUALE.blif
 .search SOTTRATTORE5.blif
-
+.search MINORE5.blif
