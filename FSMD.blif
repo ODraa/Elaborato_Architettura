@@ -1,0 +1,404 @@
+.model FSMD
+.inputs INIZIO SECONDO1 SECONDO0 PRIMO1 PRIMO0
+.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0
+.latch    [4] LatchOut_v2   0
+.latch    INIZIO LatchOut_v3   0
+.latch    m08 rg08 re NIL 0
+.latch    m07 rg07 re NIL 0
+.latch    m06 rg06 re NIL 0
+.latch    m05 rg05 re NIL 0
+.latch    m04 rg04 re NIL 0
+.latch    m43 rg13 re NIL 0
+.latch    m42 rg12 re NIL 0
+.latch    m41 rg11 re NIL 0
+.latch    m40 rg10 re NIL 0
+.latch    m39 rg09 re NIL 0
+.latch    m38 rg18 re NIL 0
+.latch    m37 rg17 re NIL 0
+.latch    m36 rg16 re NIL 0
+.latch    m35 rg15 re NIL 0
+.latch    m34 rg14 re NIL 0
+.latch    m33 rg23 re NIL 0
+.latch    m32 rg22 re NIL 0
+.latch    m31 rg21 re NIL 0
+.latch    m30 rg20 re NIL 0
+.latch    m29 rg19 re NIL 0
+.latch    MANCHE1 rg01 re NIL 0
+.latch    MANCHE0 rg00 re NIL 0
+.latch    m03 rg03 re NIL 0
+.latch    m02 rg02 re NIL 0
+.names m01 [819] MANCHE1
+11 1
+.names SECONDO0 PRIMO1 PRIMO0 m01 [809] [819] MANCHE0
+01---1 1
+-1-0-1 1
+--1-01 1
+101--1 1
+.names FCf a2 or2 [801] PARTITA1
+100- 1
+1-10 1
+.names FCf a2 a3 or2 [800] PARTITA0
+-1--- 1
+1-00- 1
+1--10 1
+.names m05 m04 s16 [191] a3 [845] FCf
+----1- 1
+1111-1 1
+0101-1 1
+1010-1 1
+0000-1 1
+.names INIZIO LatchOut_v2 LatchOut_v3 [4]
+01- 1
+0-1 1
+.names INIZIO SECONDO1 SECONDO0 rg08 m08
+0--1 1
+111- 1
+.names INIZIO rg07 [809] m07
+01- 1
+1-1 1
+.names INIZIO SECONDO0 rg06 m06
+10- 1
+0-1 1
+.names INIZIO PRIMO1 rg05 m05
+11- 1
+0-1 1
+.names INIZIO PRIMO0 rg04 m04
+11- 1
+0-1 1
+.names SECONDO1 SECONDO0 PRIMO1 PRIMO0 [809] m01
+1--0- 1
+--0-1 1
+-111- 1
+.names SECONDO0 PRIMO1 PRIMO0 rg01 rg00 rg03 rg02 [806] or0
+1--10-11 1
+0--10-01 1
+-110111- 1
+-010101- 1
+-100110- 1
+-000100- 1
+.names SECONDO1 PRIMO1 [800] [801] m03
+-10- 1
+1--0 1
+.names SECONDO0 PRIMO0 [800] [801] m02
+-10- 1
+1--0 1
+.names rg13 s09 [821] [824] m43
+-11- 1
+1--1 1
+.names rg12 s08 [821] [824] m42
+-11- 1
+1--1 1
+.names rg11 s07 [821] [824] m41
+-11- 1
+1--1 1
+.names rg10 [804] [821] [824] m40
+-11- 1
+1--1 1
+.names m09 rg09 [821] [824] m39
+0-1- 1
+-1-1 1
+.names rg18 s09 [823] [828] m38
+1-1- 1
+-1-1 1
+.names rg17 s08 [823] [828] m37
+1-1- 1
+-1-1 1
+.names rg16 s07 [823] [828] m36
+1-1- 1
+-1-1 1
+.names rg15 [804] [823] [828] m35
+1-1- 1
+-1-1 1
+.names [4] m09 rg14 [800] [823] m34
+--1-1 1
+10-0- 1
+.names rg23 s09 [822] [829] m33
+1-1- 1
+-1-1 1
+.names rg22 s08 [822] [829] m32
+1-1- 1
+-1-1 1
+.names rg21 s07 [822] [829] m31
+1-1- 1
+-1-1 1
+.names rg20 [804] [822] [829] m30
+1-1- 1
+-1-1 1
+.names [4] m09 rg19 [801] [822] m29
+--1-1 1
+10-0- 1
+.names rg18 rg23 rg13 [798] [800] [801] m13
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg17 rg22 rg12 [798] [800] [801] m12
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg16 rg21 rg11 [798] [800] [801] m11
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg15 rg20 rg10 [798] [800] [801] m10
+--10-- 1
+1---0- 1
+-1---0 1
+.names rg14 rg19 rg09 [798] [800] [801] m09
+--10-- 1
+1---0- 1
+-1---0 1
+.names m13 [833] s09
+11 1
+00 1
+.names m12 [834] s08
+11 1
+00 1
+.names m11 [835] s07
+11 1
+00 1
+.names [802] [817] s14
+01 1
+10 1
+.names [176] [810] s13
+11 1
+00 1
+.names m32 m37 [176]
+01 1
+10 1
+.names m31 m36 [178]
+01 1
+10 1
+.names m30 [180] [808] [179]
+10- 1
+-10 1
+.names [180] [310] [345] s11
+1-1 1
+-10 1
+.names m30 m35 [180]
+01 1
+10 1
+.names [803] [818] s19
+11 1
+00 1
+.names [185] [186] s18
+01 1
+10 1
+.names s13 m42 [185]
+01 1
+10 1
+.names [187] [188] [807] [186]
+11- 1
+0-1 1
+.names [187] [188] s17
+01 1
+10 1
+.names m41 [807] [187]
+01 1
+10 1
+.names s11 s16 [189] [188]
+-01 1
+1-0 1
+.names [189] [836] s16
+11 1
+00 1
+.names s11 m40 [189]
+01 1
+10 1
+.names m39 [345] [191]
+01 1
+10 1
+.names s19 s18 s17 mu0
+1-- 1
+-1- 1
+--1 1
+.names [304] [811] d4
+11 1
+00 1
+.names m38 C4 [304]
+01 1
+10 1
+.names [306] [812] d3
+01 1
+10 1
+.names m37 [317] [306]
+01 1
+10 1
+.names [308] [197] d2
+01 1
+10 1
+.names m36 [320] [308]
+01 1
+10 1
+.names m30 m29 [310] [808] [197]
+--10 1
+010- 1
+100- 1
+.names m29 [180] [310]
+01 1
+10 1
+.names mu0 d4 d3 d2 [310] [808] a2
+110--- 1
+10-1-- 1
+1-10-- 1
+10--11 1
+10--00 1
+.names [347] [813] d9
+11 1
+00 1
+.names d8 [339] [350] [338]
+01- 1
+-01 1
+.names [339] [814] d8
+01 1
+10 1
+.names m32 [350] [339]
+01 1
+10 1
+.names [341] [342] d7
+01 1
+10 1
+.names m31 [353] [341]
+01 1
+10 1
+.names m35 m34 [343] [815] [342]
+--10 1
+010- 1
+100- 1
+.names m34 [180] [343]
+01 1
+10 1
+.names m34 m29 [345]
+01 1
+10 1
+.names mu0 d9 d7 [343] [815] a3
+101-- 1
+1--00 1
+10-11 1
+.names d4 d3 d2 [310] d9 d8 d7 [343] [345] or2
+0000----1 1
+----00001 1
+.names m33 [839] C4
+01 1
+10 1
+.names m32 [840] [317]
+01 1
+10 1
+.names m31 [841] [320]
+01 1
+10 1
+.names m38 [842] [347]
+01 1
+10 1
+.names m37 [843] [350]
+01 1
+10 1
+.names m36 [844] [353]
+01 1
+10 1
+.names MANCHE1 MANCHE0 [798]
+0- 1
+-0 1
+.names m08 s19 [799]
+11 1
+00 1
+.names MANCHE1 MANCHE0 [800]
+1- 1
+-0 1
+.names MANCHE1 MANCHE0 [801]
+0- 1
+-1 1
+.names m38 m33 [802]
+01 1
+10 1
+.names m43 s14 [803]
+11 1
+00 1
+.names m10 m09 [804]
+01 1
+10 1
+.names SECONDO1 rg03 [806]
+11 1
+00 1
+.names [178] [179] [807]
+01 1
+10 1
+.names m29 [345] [808]
+0- 1
+-1 1
+.names SECONDO1 SECONDO0 [809]
+01 1
+10 1
+.names m31 [178] [179] [810]
+00- 1
+-10 1
+.names d3 [306] [317] [811]
+11- 1
+-00 1
+.names [308] [197] [320] [812]
+11- 1
+0-1 1
+.names m33 [338] [813]
+11 1
+00 1
+.names [341] [342] [353] [814]
+11- 1
+0-1 1
+.names m34 [345] [815]
+0- 1
+-1 1
+.names m32 s13 [176] [817]
+-01 1
+1-0 1
+.names s13 [185] [186] [818]
+10- 1
+-11 1
+.names INIZIO or0 [819]
+00 1
+.names [4] [798] [821]
+10 1
+.names [4] [801] [822]
+11 1
+.names [4] [800] [823]
+11 1
+.names [4] [798] [824]
+11 1
+.names MANCHE1 [4] [828]
+01 1
+.names MANCHE0 [4] [829]
+01 1
+.names m12 s08 [833]
+0- 1
+-1 1
+.names m11 s07 [834]
+0- 1
+-1 1
+.names m10 m09 [835]
+0- 1
+-0 1
+.names [191] [345] [836]
+1- 1
+-0 1
+.names m32 [317] [839]
+1- 1
+-1 1
+.names m31 [320] [840]
+1- 1
+-1 1
+.names m30 m29 [841]
+1- 1
+-1 1
+.names m37 [350] [842]
+1- 1
+-1 1
+.names m36 [353] [843]
+1- 1
+-1 1
+.names m35 m34 [844]
+1- 1
+-1 1
+.names m07 m06 s18 s17 [799] [845]
+11111 1
+01011 1
+10101 1
+00001 1
+.end
