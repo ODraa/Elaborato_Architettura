@@ -23,6 +23,10 @@ reg [4:0] manche_vinte_primo;
 reg [4:0] manche_vinte_secondo;
 reg [4:0] numero_manche;
 
+reg [1:0] temp1;
+reg [1:0] temp2;
+
+
 ////////////////// DATAPATH //////////////////
 
 
@@ -35,37 +39,37 @@ always @(posedge clk) begin
             // nel caso 0000 la scelta è ricadura su MANCHE <= 2'b00 dato il "rifiuto" di giocare
             4'b0000: MANCHE <= 2'b00; // MANCHE ANNULLATA
                 
-            4'b0001: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
+            4'b0001: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
-            4'b0010: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
+            4'b0010: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
-            4'b0011: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo 
+            4'b0011: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo 
 
-            4'b0100: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
+            4'b0100: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
 
-            4'b0101: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
+            4'b0101: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
 
-            4'b0110: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
+            4'b0110: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
-            4'b0111: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
+            4'b0111: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
 
-            4'b1000: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b010; // secondo
+            4'b1000: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b010; // secondo
 
-            4'b1001: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b010; // secondo
+            4'b1001: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b010; // secondo
 
-            4'b1010: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
+            4'b1010: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
 
-            4'b1011: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
+            4'b1011: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
-            4'b1100: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
+            4'b1100: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
 
-            4'b1101: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
+            4'b1101: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
-            4'b1110: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
+            4'b1110: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b10; // secondo
 
-            4'b1111: MANCHE <= (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
+            4'b1111: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b11; // pareggio
 
-            default: MANCHE <=  2'b00;
+            default: MANCHE =  2'b00;
         endcase
             
 
@@ -99,37 +103,79 @@ always @(posedge clk) begin
         //--- LOGICA PER LA DETERMINAZIONE DI FINE CONTO ---\\
 
         if ((manche_vinte_primo + manche_vinte_secondo + registro_pareggi) == numero_manche) begin
-            FINE_CONTO <= 1'b1
+            FINE_CONTO = 1'b1
         end
         else if (manche_vinte_primo + manche_vinte_secondo + registro_pareggi >= 5'b00100) begin
                 if ((manche_vinte_primo - manche_vinte_secondo >= 5'b00010)) begin
                     if ((manche_vinte_primo - manche_vinte_secondo < 5'b11100)) begin
-                        FINE_CONTO <= 1'b1
+                        FINE_CONTO = 1'b1
                 end
             end
         end
+
+        if (FINE_CONTO == 0) begin
+            temp1 = 2'b11;
+        end else
+        if (FINE_CONTO == 1) begin
+            temp1 = 2'b01;
+        end
+
         else if (manche_vinte_primo + manche_vinte_secondo + registro_pareggi >= 5'b00100) begin
                 if ((manche_vinte_secondo - manche_vinte_primo >= 5'b00010)) begin
                     if ((manche_vinte_secondo - manche_vinte_primo < 5'b11100)) begin
-                        FINE_CONTO <= 1'b1
+                        FINE_CONTO = 1'b1
                 end
             end
         end
-        else FINE_CONTO <= 1'b0;
+
+        if (FINE_CONTO == 0) begin
+            temp2 = 2'b11;
+        end else
+        if (FINE_CONTO == 1) begin
+            temp2 = 2'b10;
+        end
+
+        case (temp1)
+            2'b00: PARTITA = 2'b00;
+            2'b01: PARTITA = 2'b01;
+            2'b10: PARTITA = temp1;
+            2'b11: PARTITA = temp1;
+            default: 
+        endcase
+
+        else FINE_CONTO = 1'b0;
 
 
         //--- LOGICA PER LA DETERMINAZIONE DELLO STATO DELLA PARTITA ---\\
 
-        case (FINE_CONTO)
 
-            1'b0: PARTITA <= 2'b00;
+        if (FINE_CONTO == 1'b1) begin
+            if (PARTITA == 2'b11 && (manche_vinte_primo - manche_vinte_secondo == 5'b00001)) begin
+                case (MANCHE)
+                    2'b00: PARTITA = 2'b00;
+                    2'b01: PARTITA = 2'b01;
+                    2'b10: PARTITA = 2'b10;
+                    2'b11: PARTITA = 2'b00;
+                    default: 
+                endcase
+            end else 
 
-            1'b1: 
+            if (PARTITA == 2'b11 && (manche_vinte_secondo - manche_vinte_primo  == 5'b00001)) begin
+                case (MANCHE)
+                    2'b00: PARTITA = 2'b00;
+                    2'b01: PARTITA = 2'b01;
+                    2'b10: PARTITA = 2'b10;
+                    2'b11: PARTITA = 2'b00;
+                    default: 
+                endcase
+            end
 
-            default: 
-
-        endcase
-
-    end
-    
+            else begin
+                PARTITA = PARTITA;
+            end
+        end
+        if (FINE_CONTO == 1'b0) begin
+            PARTITA = 2'b00;
+        end
+    end  
 endmodule
