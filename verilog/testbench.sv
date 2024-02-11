@@ -18,12 +18,12 @@ module tb_MorraCinese();
     wire [1:0] PARTITA;
     
     MorraCinese sem(
-      	clk, 
-        INIZIO, 
-        PRIMO,
-        SECONDO,
-        MANCHE,
-        PARTITA
+      	.clk(clk), 
+        .INIZIO(INIZIO), 
+        .PRIMO(PRIMO),
+        .SECONDO(SECONDO),
+        .MANCHE(MANCHE),
+        .PARTITA(PARTITA)
     );
     
     always #10 clk = ~clk;

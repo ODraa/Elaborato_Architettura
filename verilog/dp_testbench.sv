@@ -11,7 +11,6 @@ module tb_datapath();
     reg clk;
     reg INIZIO_CONTO;
     reg INIZIO_SETUP;
-    reg CONTO;
     reg [1:0] PRIMO;
     reg [1:0] SECONDO;
     reg FINE_CONTO;
