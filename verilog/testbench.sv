@@ -19,7 +19,7 @@ module tb_MorraCinese();
     
     MorraCinese sem(
       	clk, 
-        INIZIA, 
+        INIZIO, 
         PRIMO,
         SECONDO,
         MANCHE,
@@ -36,49 +36,49 @@ module tb_MorraCinese();
       $fdisplay(tbf, "read_blif FSMD.blif");
       
       clk = 1'b0;
-      /----------------------------------------------------------------------
-      INIZIA = 1'b1;
+      //----------------------------------------------------------------------
+      INIZIO = 1'b1;
       SECONDO = 2'b00;
       PRIMO = 2'b00;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
-      INIZIA = 1'b0;
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
       SECONDO = 2'b01;
       PRIMO = 2'b10;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
-      INIZIA = 1'b0;
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
       SECONDO = 2'b11;
       PRIMO = 2'b10;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
-      INIZIA = 1'b0;
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
       SECONDO = 2'b00;
       PRIMO = 2'b10;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
-      INIZIA = 1'b0;
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
       SECONDO = 2'b11;
       PRIMO = 2'b10;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
-      INIZIA = 1'b0;
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
       SECONDO = 2'b01;
       PRIMO = 2'b10;
-      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
+      $fdisplay(tbf, "simulate %b %b %b", INIZIO, SECONDO, PRIMO);
       #20
-      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
     //   INIZIA = 1'b;
     //   SECONDO = 2'b;
     //   PRIMO = 2'b;
@@ -127,7 +127,7 @@ module tb_MorraCinese();
     //   $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO, PRIMO);
     //   #20
     //   $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE, PARTITA);
-      /----------------------------------------------------------------------
+      //----------------------------------------------------------------------
       $fdisplay(tbf, "quit");
       $fclose(tbf);
       $fclose(outf);

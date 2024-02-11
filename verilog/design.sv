@@ -1,4 +1,4 @@
-.module MorraCinese (
+module MorraCinese (
 
     input clk,
 
@@ -6,8 +6,8 @@
     input INIZIO,
     input [1:0] PRIMO,
     input [1:0] SECONDO,
-    output [1:0] MANCHE,
-    output [1:0] PARTITA
+    output reg [1:0] MANCHE,
+    output reg [1:0] PARTITA
 );
         
     // segnali di controllo
@@ -28,6 +28,9 @@
     reg [4:0] manche_vinte_secondo;
     reg [4:0] numero_manche;
 
+    reg [1:0] mossa_giocatore_1 = 2'b00;
+    reg [1:0] mossa_giocatore_2 = 2'b00;
+
     reg [1:0] temp1;
     reg [1:0] temp2;
 
@@ -38,7 +41,7 @@
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
 
-    always @(INIZIO, FINE_CONTO) begin : FSM
+    always @(stato, INIZIO, FINE_CONTO) begin : FSM
         case (stato)
 
             2'b00:
@@ -97,22 +100,20 @@
                 stato_prossimo = 2'b00;
 
             end
-
-            default: 
         endcase
     end
     
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
 
-    always @(posedge clk) begin : DATAPATH
+    always @(*) begin : DATAPATH
 
         //--- LOGICA DETERMINAZIONE VINCITORE DELLA MANCHE ---\\
 
         case ({SECONDO,PRIMO})
 
                 // nel caso 0000 la scelta è ricadura su MANCHE <= 2'b00 dato il "rifiuto" di giocare
-                4'b0000: MANCHE <= 2'b00; // MANCHE ANNULLATA
+                4'b0000: MANCHE = 2'b00; // MANCHE ANNULLATA
 
                 4'b0001: MANCHE = (((vincitore_manche_precedente == 2'b01 && mossa_giocatore_1 == mossa_vincitrice) || (vincitore_manche_precedente == 2'b10 && mossa_giocatore_2 == mossa_vincitrice)) && (INIZIO_SETUP == 1)) ? 2'b00 : 2'b01; // primo
 
@@ -147,6 +148,11 @@
                 default: MANCHE =  2'b00;
             endcase
 
+            if (1) begin
+                mossa_giocatore_1 = PRIMO;
+                mossa_giocatore_2 = SECONDO;
+            end
+
 
             //--- LOGICA DETERMINAZIONE VINCITORE DELLA MANCHE ---\\
 
@@ -159,34 +165,51 @@
 
             //--- LOGICA PER L'INCREMENTO DEI REGISTRI A SECONDA DEL VINCITORE DELLA MANCHE ---\\
 
+            // case (MANCHE)
+
+            //     2'b01: manche_vinte_primo = (INIZIO_CONTO == 1'b1) ? manche_vinte_primo++ : manche_vinte_primo = 5'b00000;
+
+            //     2'b10: manche_vinte_secondo = (INIZIO_CONTO == 1'b1) ? manche_vinte_secondo++ : manche_vinte_secondo = 5'b00000;
+
+            //     2'b11: registro_pareggi = (INIZIO_CONTO == 1'b1) ? registro_pareggi++ : registro_pareggi = 5'b00000;
+
+            // endcase
 
             case (MANCHE)
 
-                2'b00: 
+                2'b01: if (INIZIO_CONTO == 1'b1) begin
+                            manche_vinte_primo = manche_vinte_primo++;
+                        end else begin
+                            manche_vinte_primo = 5'b00000;
+                        end
 
-                2'b01: (INIZIO_CONTO == 1) ? manche_vinte_primo++ : manche_vinte_primo = 5'b00000;
+                2'b10: if (INIZIO_CONTO == 1'b1) begin
+                            manche_vinte_secondo = manche_vinte_secondo++;
+                        end else begin
+                            manche_vinte_secondo = 5'b00000;
+                        end
 
-                2'b10: (INIZIO_CONTO == 1) ? manche_vinte_secondo++ : manche_vinte_secondo = 5'b00000;
-
-                2'b11: (INIZIO_CONTO == 1) ? registro_pareggi++ : registro_pareggi = 5'b00000;
-
-                default: //
-
+                2'b11: if (INIZIO_CONTO == 1'b1) begin
+                            registro_pareggi = registro_pareggi++;
+                        end else begin
+                            registro_pareggi = 5'b00000;
+                        end
             endcase
 
 
             //--- LOGICA PER LA DETERMINAZIONE DI FINE CONTO ---\\
 
             if ((manche_vinte_primo + manche_vinte_secondo + registro_pareggi) == numero_manche) begin
-                FINE_CONTO = 1'b1
+                FINE_CONTO = 1'b1;
             end
             else if (manche_vinte_primo + manche_vinte_secondo + registro_pareggi >= 5'b00100) begin
                     if ((manche_vinte_primo - manche_vinte_secondo >= 5'b00010)) begin
                         if ((manche_vinte_primo - manche_vinte_secondo < 5'b11100)) begin
-                            FINE_CONTO = 1'b1
+                            FINE_CONTO = 1'b1;
                     end
                 end
             end
+            else FINE_CONTO = 1'b0;
 
             if (FINE_CONTO == 0) begin
                 temp1 = 2'b11;
@@ -198,10 +221,11 @@
             else if (manche_vinte_primo + manche_vinte_secondo + registro_pareggi >= 5'b00100) begin
                     if ((manche_vinte_secondo - manche_vinte_primo >= 5'b00010)) begin
                         if ((manche_vinte_secondo - manche_vinte_primo < 5'b11100)) begin
-                            FINE_CONTO = 1'b1
+                            FINE_CONTO = 1'b1;
                     end
                 end
             end
+            else FINE_CONTO = 1'b0;
 
             if (FINE_CONTO == 0) begin
                 temp2 = 2'b11;
@@ -215,10 +239,9 @@
                 2'b01: PARTITA = 2'b01;
                 2'b10: PARTITA = temp1;
                 2'b11: PARTITA = temp1;
-                default: 
             endcase
 
-            else FINE_CONTO = 1'b0;
+            // else FINE_CONTO = 1'b0;
 
 
             //--- LOGICA PER LA DETERMINAZIONE DELLO STATO DELLA PARTITA ---\\
@@ -231,7 +254,6 @@
                         2'b01: PARTITA = 2'b01;
                         2'b10: PARTITA = 2'b10;
                         2'b11: PARTITA = 2'b00;
-                        default: 
                     endcase
                 end else 
 
@@ -241,7 +263,6 @@
                         2'b01: PARTITA = 2'b01;
                         2'b10: PARTITA = 2'b10;
                         2'b11: PARTITA = 2'b00;
-                        default: 
                     endcase
                 end
 
