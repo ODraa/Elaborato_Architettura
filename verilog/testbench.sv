@@ -121,6 +121,48 @@ module tb_MorraCinese();
       #20
       $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
       //----------------------------------------------------------------------
+      INIZIO = 1'b1;
+      SECONDO = 2'b00;
+      PRIMO = 2'b00;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
+      SECONDO = 2'b01;
+      PRIMO = 2'b11;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
+      SECONDO = 2'b10;
+      PRIMO = 2'b01;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
+      SECONDO = 2'b00;
+      PRIMO = 2'b01;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
+      SECONDO = 2'b10;
+      PRIMO = 2'b01;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
+      INIZIO = 1'b0;
+      SECONDO = 2'b10;
+      PRIMO = 2'b01;
+      $fdisplay(tbf, "simulate %b %b %b %b %b", INIZIO, SECONDO[1], SECONDO[0], PRIMO[1], PRIMO[0]);
+      #20
+      $fdisplay(outf, "Outputs: %b %b %b %b", MANCHE[1], MANCHE[0], PARTITA[1], PARTITA[0]);
+      //----------------------------------------------------------------------
       $fdisplay(tbf, "quit");
       $fclose(tbf);
       $fclose(outf);
