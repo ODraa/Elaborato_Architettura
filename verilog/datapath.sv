@@ -78,6 +78,25 @@ module datapath (
                 4'b1110: MANCHE = 2'b10;
                 4'b1111: MANCHE = 2'b11;
             endcase
+
+            // PROVA A METTERE ELSE IF O RIFAI IN ALTRO MODO O CAPISCI COME FARE
+
+            // if (MANCHE == 2'b01) begin
+            //     vincitore_manche_precedente = 2'b01;
+            //     mossa_vincitrice = PRIMO;
+            // end
+            // if (MANCHE == 2'b10) begin
+            //     vincitore_manche_precedente = 2'b10;
+            //     mossa_vincitrice = SECONDO;
+            // end
+            // if (MANCHE == 2'b11) begin
+            //     vincitore_manche_precedente = 2'b11;
+            //     mossa_vincitrice = 2'b00;
+            // end
+            // if (MANCHE == 2'b00) begin
+            //     vincitore_manche_precedente = 2'b00;
+            //     mossa_vincitrice = 2'b00;
+            // end
         end
 
                 mossa_giocatore_1 = PRIMO;
