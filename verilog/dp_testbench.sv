@@ -14,6 +14,7 @@ module tb_datapath();
     reg CONTO;
     reg [1:0] PRIMO;
     reg [1:0] SECONDO;
+    reg FINE_CONTO;
 
     // Outputs
     wire [1:0] MANCHE;
@@ -22,7 +23,8 @@ module tb_datapath();
     datapath sem(
       	.clk(clk), 
         .INIZIO_CONTO(INIZIO_CONTO),
-        .INIZIO_SETUP(INIZIO_SETUP), 
+        .INIZIO_SETUP(INIZIO_SETUP),
+        .FINE_CONTO(FINE_CONTO)
         .PRIMO(PRIMO),
         .SECONDO(SECONDO),
         .MANCHE(MANCHE),
@@ -81,6 +83,109 @@ module tb_datapath();
       $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
       //----------------------------------------------------------------------
       SECONDO = 2'b00;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+
+
+
+      SECONDO = 2'b00;
+      PRIMO = 2'b00;
+      INIZIO_CONTO = 2'b0;
+      INIZIO_SETUP = 2'b1;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b11;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b00;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b01;
+      PRIMO = 2'b11;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b00;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+
+
+
+
+      SECONDO = 2'b00;
+      PRIMO = 2'b01;
+      INIZIO_CONTO = 2'b0;
+      INIZIO_SETUP = 2'b1;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b11;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b11;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b01;
+      PRIMO = 2'b00;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b00;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b00;
+      PRIMO = 2'b10;
+      INIZIO_CONTO = 2'b1;
+      INIZIO_SETUP = 2'b0;
+      $fdisplay(tbf, "simulate %b %b %b %b", INIZIO_SETUP, INIZIO_CONTO, SECONDO, PRIMO);
+      #20
+      $fdisplay(outf, "Outputs: %b %b", MANCHE, PARTITA);
+      //----------------------------------------------------------------------
+      SECONDO = 2'b11;
       PRIMO = 2'b10;
       INIZIO_CONTO = 2'b1;
       INIZIO_SETUP = 2'b0;
